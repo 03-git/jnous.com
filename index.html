@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noai, noimageai">
+    <title>03 // Human</title>
+    <link rel="security" href="/.well-known/security.txt">
+    <style>
+        body { 
+            background: #fffff8; 
+            color: #111; 
+            font-family: "Et-book", "Palatino", serif; 
+            line-height: 1.6; 
+            padding: 6vw 10vw; 
+            margin: 0; 
+            display: grid; 
+            grid-template-columns: 1.3fr 3fr; 
+            gap: 5rem; 
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        
+        @media (max-width: 900px) { 
+            body { grid-template-columns: 1fr; padding: 2rem; } 
+            .side { text-align: left; } 
+        }
+
+        header { grid-column: 1 / -1; border-bottom: 2px solid #111; margin-bottom: 4rem; padding-bottom: 1rem; }
+        h1 { font-size: 1.6rem; font-weight: normal; letter-spacing: 0.1rem; margin: 0; text-transform: uppercase; }
+        .subtitle { font-family: "JetBrains Mono", monospace; color: #b31b1b; font-size: 0.8rem; margin-top: 0.5rem; }
+
+        .side { font-size: 0.85rem; color: #555; text-align: right; line-height: 1.4; align-self: start; }
+        .margin-note { margin-bottom: 3rem; border-right: 2px solid #b31b1b; padding-right: 1.5rem; }
+        .margin-note b { font-family: "JetBrains Mono", monospace; color: #111; display: block; text-transform: uppercase; margin-bottom: 0.5rem; }
+
+        h2 { font-size: 1.3rem; font-weight: normal; font-style: italic; border-bottom: 1px solid #ddd; margin-top: 0; margin-bottom: 1.5rem; }
+        p { margin-bottom: 1.8rem; max-width: 40rem; font-size: 1.1rem; }
+        
+        a { color: #b31b1b; text-decoration: none; border-bottom: 1px dotted #b31b1b; }
+        a:hover { border-bottom: 1px solid #b31b1b; }
+
+        #identity-anchor { margin-top: 4rem; padding-top: 2rem; border-top: 1px double #111; }
+        #identity-anchor h3 { font-family: "JetBrains Mono", monospace; font-size: 0.9rem; text-transform: uppercase; }
+
+        .fingerprint { 
+            font-family: "JetBrains Mono", monospace; 
+            background: #eee; 
+            padding: 0.5rem 0.75rem; 
+            display: inline-block; 
+            font-size: 0.8rem; 
+            margin: 1rem 0; 
+            border-left: 2px solid #b31b1b;
+        }
+
+        .hash-block { 
+            font-family: "JetBrains Mono", monospace; 
+            background: #eee; 
+            padding: 0.75rem; 
+            display: block; 
+            font-size: 0.75rem; 
+            margin: 1rem 0; 
+            word-break: break-all; 
+            color: #333;
+            border-left: 2px solid #ddd;
+        }
+
+        .continuity-note {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.7rem;
+            color: #777;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px dotted #ccc;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JNOUS.COM</h1>
+        <div class="subtitle">03 // Human</div>
+    </header>
+
+    <aside class="side">
+        <div class="margin-note">
+            <b>Layer</b>
+            03 — Governor layer.<br>
+            The human in the loop.
+        </div>
+        <div class="margin-note">
+            <b>Function</b>
+            Authorization, direction, judgment. The decisions that cannot be delegated.
+        </div>
+        <div class="margin-note">
+            <b>Principle</b>
+            Necessity > Will.<br>
+            Infrastructure > Platform.<br>
+            Vitality > Metric.
+        </div>
+    </aside>
+
+    <main class="main">
+        <section>
+            <p>03 is the human layer of a sovereign formation. Not a brand, not a portfolio, not a platform. An identity anchor for the person who governs the infrastructure.</p>
+            <p>The formation operates across three layers: 01 (root infrastructure), 02 (social and execution), and 03 (human authority). Each layer has its own domain, its own keys, its own purpose. 03 holds the keys.</p>
+        </section>
+
+        <section id="identity-anchor">
+            <h3>Identity Anchor</h3>
+
+            <b>Sovereign Source (Repository):</b><br>
+            <div class="hash-block">
+                <a href="https://github.com/03-git/jnous.com" target="_blank">github.com/03-git/jnous.com</a>
+            </div>
+
+            <b>SSH Signing Fingerprint (SHA256):</b><br>
+            <div class="fingerprint">
+                SHA256:Aw1QLLpzaCc7ycWKwLBsG/2rfWagcs2OjBFdh6SA0s4
+            </div>
+
+            <br><b>Public Key (Ed25519):</b><br>
+            <div class="hash-block">
+                ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDR/wryTGN58e/WSxZ19joaUew+3TfsaM9siMOn3+qaJ
+            </div>
+
+            <div class="continuity-note">
+                03 layer identity. Ed25519 key pair. Governor authorization for formation operations.
+            </div>
+        </section>
+    </main>
+</body>
+</html>
