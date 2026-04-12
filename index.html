@@ -136,6 +136,20 @@
             <b>SSH Signing Fingerprint (SHA256):</b><br>
             <div class="fingerprint">SHA256:Aw1QLLpzaCc7ycWKwLBsG/2rfWagcs2OjBFdh6SA0s4</div>
 
+            <br><b>Cross-Verification via subtract.ing:</b><br>
+            <div class="continuity-note">
+                The fingerprint above is the key that signs the machine-readable manifest at
+                <a href="https://subtract.ing/llms.txt">subtract.ing/llms.txt</a>.
+                Verify the chain yourself:<br><br>
+                <code>
+                curl -sO https://subtract.ing/authorized_signers<br>
+                curl -sO https://subtract.ing/llms.txt.sig<br>
+                curl -s https://subtract.ing/llms.txt | ssh-keygen -Y verify \<br>
+                &nbsp;&nbsp;-f authorized_signers -I josh@subtract.ing -n subtract.ing -s llms.txt.sig
+                </code><br><br>
+                Good signature &rarr; this site's identity is the same identity that signs the subtract substrate.
+            </div>
+
             <br><b>Public Sovereignty Root (Ed25519):</b><br>
             <div class="hash-block">ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDR/wryTGN58e/WSxZ19joaUew+3TfsaM9siMOn3+qaJ</div>
 
