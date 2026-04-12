@@ -1,6 +1,4 @@
 {
-  "v": "1.5",
-  "epoch": 1,
   "node": "03",
   "current": {
     "alg": "ssh-ed25519",
