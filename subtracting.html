@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>subtracting</title>
+    <style>
+        body { background: #111; color: #c0c0c0; font-family: monospace; margin: 2rem auto; max-width: 120ch; padding: 0 1rem; line-height: 1.4; }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+    </style>
+</head>
+<body>
+<pre>
+title: Subtracting
+summary: Why subtract exists. The thesis, lineage, and evidence.
+url: <a href="https://jnous.com/subtracting.html">https://jnous.com/subtracting.html</a>
+license: GPLv2
+keywords: subtracting thesis lineage evidence subtract why
+
+    subtract.ing / subtracting
+    Theory, lineage, and evidence.
+
+    
+
+    What it is
+
+    Shell translation infrastructure. Type intent, get command,
+    learn command, stop needing translation.
+
+    For humans: you learn how to use Unix more.
+    For agents: you're reminded how Unix can be used.
+
+    Software as a besides. The goal is that the user learns the
+    command and stops needing translation.
+
+    subtract shows you the supercomputer in every computer — when you look down close enough.
+
+    
+
+    Why
+
+    subtract rests on three primitives that already ship with Unix:
+Entry   command_not_found_handle   intent enters bash
+Trust   ssh-keygen -Y              signed provenance for knowledge
+Time    sleep, at, cron            yield to the kernel scheduler
+    No account. No API key. No terms of service. No usage meter.
+    Computers come with commands that work when you are not online.
+
+    Let your local computer help you think and do, instead of
+    asking a cloud AI to do all the thinking and doing. As learned
+    commands grow, the user invokes the command directly. A learned
+    command has no inference cost.
+subtractthe alternative
+command_not_found_handle (bash, 1 function)Python CLI + Click + Docker + pip install
+lookdown.tsv (flat file, grep)vector database + embeddings + RAG pipeline + 47 packages
+handler.sh (case statement tier routing)semantic router chain + "mixture of agents"
+bridge.py (140 lines, stdlib only)FastAPI + Uvicorn + Redis + WebSocket + requirements.txt
+multiplying.html (1 file, no build step)Next.js + React + Tailwind + npm install (1,200 node_modules/)
+squared.c (716 lines, 3 libraries)Nginx + Docker Compose + Kubernetes ingress
+ssh-keygen -Y sign (ships with the OS)Auth0 + JWT + OAuth2 + "we need a signing service"
+1570 lookdown.tsv entries (text file)SaaS knowledge base + API connector + monthly license
+install.sh (50 lines, curl + cp)Homebrew tap + Docker pull + helm chart + "check our docs"
+dependencies: 5dependencies: 600+, 3 cloud accounts, monthly spend
+
+Both produce the same output: a person types what they need, gets an answer.
+
+    Full frame: subtract.7.txt
+    Full argument: software-as-a-besides.txt
+
+    
+
+    What it subtracts from
+
+    Like a telephone game:
+    user types intent, it passes through orchestration, API, UI framework,
+    rendering, analytics, billing. Each layer transforms the input before
+    it reaches the system.
+
+    subtract makes software layers transparent.
+
+    
+
+    Measurement
+
+    The router logs every intent that enters
+    command_not_found_handle with its resolving tier.
+    Tier migration per intent-class over time shows whether the human
+    is learning the direct form. When the handler stops firing for an
+    intent-class, that intent has graduated.
+
+    That is what "let the computer answer first" means.
+
+    
+
+    How it works
+
+    How hard your computer has to think, or if it has to
+    phone a friend.
+computer    lookdown.tsv   pattern match, no AI
+            apropos        man page lookup, no AI
+
+assisted    embedding      local vector search
+            llama.cpp      local language model
+
+remote      curl           cloud API
+    Voice input and output (speech-to-text, text-to-speech) can
+    be local or cloud depending on what is available.
+
+    The goal is that your computer answers before assistance is
+    needed, and local assistance answers before remote does. Each component is either
+    pre-installed or a single binary plus model file. Full local
+    install is roughly 1.1GB. No interpreter or package manager
+    required.
+
+    Three layers subtract in sequence:
+1. subtract subtracts from the environment (no frameworks, no SaaS)
+2. the human subtracts from the agent's context (pre-flight, pushback)
+3. the agent subtracts from its own defaults (no verbosity, no confabulation)
+
+    
+
+    Populations
+
+    subtract serves two populations:
+
+    Humans who want to stop depending on AI intermediaries
+    to reach their own machines.
+
+    Agents that reach for libraries and SaaS before
+    checking what the filesystem and built-in commands already do.
+
+    
+
+    Lineage
+
+    Brian Fox wrote bash in 1989 — the shell, readline,
+    the history library. command_not_found_handle is a bash
+    construct. subtract runs on what Fox wrote.
+
+    Chet Ramey has maintained bash since 1993. Authored
+    help as a builtin. Kept command_not_found_handle
+    a stable public hook for fifteen+ years.
+
+    Full lineage with works cited: lineage.txt
+
+    
+
+    Evidence
+
+    Empirical findings from variance-lab, run on the subtract substrate:
+
+    variance-lab.txt — six findings (claim layer)
+    variance-lab-handler-methodology.txt — three-gate methodology report
+    emile.txt — local-first deployment pattern for sole proprietors
+
+    
+
+    Reflexes
+
+    Four gates. An agent that cannot answer the question
+    does not proceed.
+1. Before proposing any library or tool, name the kernel primitive it wraps
+2. Before proposing any new format, ask if ssh-keygen -Y sign works
+3. Before acting on memory, check if signed; if not, live read
+4. Before treating a source as authoritative, confirm it's under the signing domain
+    Full specification: governance.conf.universal.txt
+
+    
+
+    Documents
+README.txt                             entry gradient
+subtract.7.txt                         man(7) frame
+lookdown.universal.tsv                 routing table
+governance.conf.universal.txt           reflexes, authority, loop
+software-as-a-besides.txt              why?
+lineage.txt                            credits and bibliography
+signoff.txt                            session close
+variance-lab.txt                       empirical findings
+variance-lab-handler-methodology.txt   three-gate methodology
+emile.txt                              deployment pattern
+SOUL.txt                               dispositional layer
+    
+
+    Repo: github.com/03-git/subtract.ing
+    License: GPLv3
+    Authors: Park/Joshua (@hodorigami) & LLMs (@qwen @claude @gemini @grok)
+
+jnous.com                        2026-05-23                      JNOUS(7)
+</pre>
+</body>
+</html>

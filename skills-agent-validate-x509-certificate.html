@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skills-agent-validate-x509-certificate</title>
+    <style>
+        body {
+            background: #111;
+            color: #c0c0c0;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 120ch;
+            padding: 0 1rem;
+            line-height: 1.4;
+        }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+    </style>
+</head>
+<body>
+<pre>
+title: VALIDATE AN X.509 CERTIFICATE CHAIN
+summary: validate ssl cert, check certificate, verify certificate chain, x509 validation,
+url: <a href="https://jnous.com/skills-agent-validate-x509-certificate.html">https://jnous.com/skills-agent-validate-x509-certificate.html</a>
+license: GPLv2
+keywords: agent auth certificate tls x509 security skill
+
+
+VALIDATE AN X.509 CERTIFICATE CHAIN
+
+Steps:
+1. Extract the certificate: `openssl s_client -connect HOST:443 -showcerts` or read from file with `openssl x509 -in CERT.pem -text -noout`.
+2. Check expiry: find `Not Before` and `Not After` fields. If current time is outside this range, the certificate is invalid.
+3. Check the subject/SAN: the Common Name (CN) or Subject Alternative Name (SAN) must match the hostname you're connecting to. SAN takes precedence over CN.
+4. Verify the chain: each certificate's Issuer must match the next certificate's Subject, up to a trusted root CA.
+   - `openssl verify -CAfile ROOT.pem -untrusted INTERMEDIATE.pem LEAF.pem`
+5. Check revocation (CRL): find the CRL Distribution Points extension. Download the CRL. Verify the certificate serial number is not listed.
+   - `openssl crl -in CRL.pem -text -noout`
+6. Check revocation (OCSP): find the Authority Information Access extension. Send an OCSP request.
+   - `openssl ocsp -issuer ISSUER.pem -cert LEAF.pem -url OCSP_URL -resp_text`
+7. Check key usage: the Key Usage and Extended Key Usage extensions must permit the intended operation (e.g., serverAuth for TLS servers).
+
+Notes:
+- Self-signed certificates fail chain validation by design. To trust one, add it explicitly to your CA bundle.
+- Certificate Transparency (CT) logs can verify a certificate was publicly logged. Check via crt.sh.
+- If OCSP stapling is supported, the server provides the OCSP response -- no separate request needed.
+- A valid chain with an expired intermediate is invalid. Check every certificate in the chain, not just the leaf.
+
+jnous.com                        2026-05-23                      JNOUS(7)
+</pre>
+</body>
+</html>

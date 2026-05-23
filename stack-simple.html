@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stack-simple</title>
+    <style>
+        body { background: #111; color: #c0c0c0; font-family: monospace; margin: 2rem auto; max-width: 120ch; padding: 0 1rem; line-height: 1.4; }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+    </style>
+</head>
+<body>
+<pre>
+title: Stack
+summary: The subtract dependency stack. What is already there vs what gets added.
+url: <a href="https://jnous.com/stack-simple.html">https://jnous.com/stack-simple.html</a>
+license: GPLv2
+keywords: stack dependencies kernel shell subtract
+
+subtract.ing / stack
+ OPERATING SYSTEM
++--------------------------------------------------------------------------+
+| +------------+  +---------------------+  +-----------+  +-------------+  |
+| |    Job     |  | Desktop Environment |  | Standard  |  |  Firewall   |  |
+| | Scheduler  |  |                     |  |  Library  |  |  Manager    |  |
+| +------------+  +---------------------+  +-----------+  +-------------+  |
+|                                                                          |
+| +-------+--------+--------+---------+---------+---------+--------+-----+ |
+| | Shell | SSH    | Device | Display | Session | Package | Netwrk | MM  | |
+| |       | Server | Mgr    | Server  | Mgr     | Mgr     | Mgr    | Stk | |
+| +-------+--------+--------+---------+---------+---------+--------+-----+ |
+|     |                                                                    |
+|     |                       +------+                                     |
+|     |                       | init |                                     |
+|     |                       +------+                                     |
++-----|--------------------------------------------------------------------+
+      |
+      +-- subtract attaches here via command_not_found_handle
+          beside the shell, not instead of it
+          uses SSH, cron, curl unchanged — adds nothing to this diagram
+
+ KERNEL
++--------------------------------------------------------------------------+
+|                      System Call Interface                                |
+|                  fork()              fork()                               |
+|--------------------------------------------------------------------------|
+| +--------+-----+--------+---------+--------+---------+-------+----+----+ |
+| | Device | I/O | Virt.  | CPU     | Memory | Intrpt  | Netwk | IP | Se | |
+| | Driver | Sub | File   | Schedu- | Mgmt   | Handler | Stack | C  | cu | |
+| |   s    | sys | System | ler     | Subsys |         |       |    | ri | |
+| +--------+-----+--------+---------+--------+---------+-------+----+----+ |
++--------------------------------------------------------------------------+
+
+ HARDWARE
++--------------------------------------------------------------------------+
+|   NIC        GPU        CPU        RAM        Keyboard        Mouse      |
++--------------------------------------------------------------------------+
+
+jnous.com                        2026-05-23                      JNOUS(7)
+</pre>
+</body>
+</html>

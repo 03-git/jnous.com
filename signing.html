@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signing</title>
+    <style>
+        body {
+            background: #111;
+            color: #c0c0c0;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 120ch;
+            padding: 0 1rem;
+            line-height: 1.4;
+        }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+    </style>
+</head>
+<body>
+<pre>
+title: signing
+summary: signing
+url: <a href="https://jnous.com/signing.html">https://jnous.com/signing.html</a>
+license: GPLv2
+keywords: signing subtract
+
+    subtract.ing / signing
+
+    The same archaeological pattern, applied to trust.
+    
+        command_not_found_handle is how subtract enters.
+        ssh-keygen -Y is how subtract trusts.
+        Both shipped years ago. Both were waiting.
+    
+Next: Time
+
+    The primitive
+    
+        OpenSSH 8.0 shipped in April 2019 with ssh-keygen -Y sign and ssh-keygen -Y verify.
+        The intended use case was signing git commits with SSH keys instead of GPG.
+    
+    
+        Almost nobody uses it. GPG had the mindshare. The use case (signing arbitrary files with keys you already have) is not taught.
+    
+
+    
+        
+            
+            
+            
+        
+        
+# Sign a file with your existing SSH key
+$ ssh-keygen -Y sign -f ~/.ssh/id_ed25519 -n namespace &lt; file.txt &gt; file.txt.sig
+
+# Verify the signature against a list of trusted keys
+$ ssh-keygen -Y verify -f ~/.ssh/authorized_signers -I signer -n namespace -s file.txt.sig &lt; file.txt
+Good "namespace" signature for signer with ED25519 key SHA256:...
+        
+    
+
+    
+        No PKI. No certificate authority. No cloud service. No library dependency.
+        One binary that ships with every Unix system, using keys you already have.
+    
+
+    The parallel
+
+    
+        
+            
+            Entry
+            Trust
+        
+        
+            Primitive
+            command_not_found_handle
+            ssh-keygen -Y
+        
+        
+            Shipped
+            Bash 4.0, 2009
+            OpenSSH 8.0, 2019
+        
+        
+            Intended use
+            Error handling hook
+            Git commit signing
+        
+        
+            subtract use
+            Translation entry point
+            Agent governance layer
+        
+        
+            Awareness
+            Low
+            Lower
+        
+    
+
+    
+        Same archaeological pattern: the kernel (or core userland) already ships the primitive.
+        The application is routing people to use it instead of reaching for frameworks.
+    
+
+    The application
+    
+        When an AI agent assists with system administration, who decides what the agent is allowed to treat as ground truth?
+    
+    
+        The typical answer involves JWTs, OAuth flows, cloud signing services, or "just trust the context window."
+        All of these add dependencies. All of them can be captured or rotated out from under you.
+    
+    
+        subtract's answer: sign the files the agent should trust with your SSH key.
+        The agent verifies the signature before acting on the content.
+    
+
+    
+        Manifest of frame docs. Hash the configuration files, the protocol docs, the scripts. Write the hashes to a manifest. Sign the manifest.
+        Pre-flight verification. Before the agent does anything, verify the manifest signature. If it fails, the session stops.
+        Signed vs unsigned = authoritative vs advisory. The agent can read anything. It can only act on signed content.
+        Bootstrap problem solved. The scripts that verify are themselves in the manifest. Verify the manifest signature first, then verify the scripts' hashes against manifest entries, then trust the scripts to verify everything else.
+    
+
+    The authority model
+    
+        In applied behavior analysis, a BCBA (board-certified behavior analyst) designs intervention programs.
+        An RBT (registered behavior technician) implements them under supervision.
+        The RBT observes everything but authors nothing without the BCBA's sign-off.
+    
+    
+        ssh-keygen -Y makes this mechanical. The human signs program changes.
+        The agent operates within signed boundaries.
+        The signature is the BCBA.
+    
+
+    What this replaces
+    
+        If you reach for a signing solution today, you find:
+    
+    
+        JWT libraries (requires runtime, parsing, key management)
+        Cloud signing services (requires account, network, trust in provider)
+        GPG (works, but heavier toolchain than SSH)
+        Nothing (trust the context window, hope for the best)
+    
+    
+        ssh-keygen -Y requires: the SSH binary you already have,
+        a key you already have, and one line in ~/.ssh/authorized_signers.
+    
+
+    The implication
+    
+        The lookup table that routes your commands can itself be signed.
+    
+
+    
+        
+            
+            
+            
+        
+        
+# Sign your lookup table
+$ ssh-keygen -Y sign -f ~/.ssh/id_ed25519 -n subtract &lt; ~/.subtract/lookup.tsv &gt; lookup.tsv.sig
+
+# Share both files. Recipient adds your public key to their authorized_signers:
+# ~/.ssh/authorized_signers (one line per trusted signer)
+colleague ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI...
+
+# Then verifies:
+$ ssh-keygen -Y verify -f ~/.ssh/authorized_signers -I colleague -n subtract -s lookup.tsv.sig &lt; lookup.tsv
+Good "subtract" signature for colleague with ED25519 key SHA256:...
+        
+    
+
+    
+        The lookup table is both the distilled model (T0 routing) and the attested model (signed provenance).
+        Fork it, edit it, sign it with your key. The signature is the authority chain, not the platform that shipped it.
+    
+    
+        A clinical example: a behavior analyst signs her lookup table containing prompting sequences and session patterns.
+        The tablet in the therapy room runs attested knowledge. If she shares her lookup with another clinician,
+        the signature verifies it came from her — not from a hallucinated model or a corrupted transmission.
+        The chain of custody is cryptographic, portable, and requires no infrastructure beyond the keys both parties already have.
+    
+
+    The discovery
+    
+        The trust layer for all human-authored knowledge that agents will act on already ships with every Unix install, and nobody is using it.
+    
+
+    Status
+    
+        The architecture is designed but not yet ceremonially signed.
+        Hardware key migration (Yubikey) is in progress.
+        First signing ceremony follows, then this documentation reflects shipped state.
+    
+    
+        The primitive works today. Try it:
+    
+
+    
+        
+            
+            
+            
+        
+        
+# Create a test file
+$ echo "hello" &gt; test.txt
+
+# Sign it
+$ ssh-keygen -Y sign -f ~/.ssh/id_ed25519 -n test &lt; test.txt &gt; test.txt.sig
+
+# Create authorized_signers (your public key, any principal name)
+$ echo "me $(cat ~/.ssh/id_ed25519.pub)" &gt; ~/.ssh/authorized_signers
+
+# Verify
+$ ssh-keygen -Y verify -f ~/.ssh/authorized_signers -I me -n test -s test.txt.sig &lt; test.txt
+Good "test" signature for me with ED25519 key SHA256:...
+        
+    
+    subtract.ing &middot; paste &middot; why &middot; lineage &middot; substrate &middot; signing &middot; time &middot; governance &middot; discipline &middot; github
+
+jnous.com                        2026-05-23                      JNOUS(7)
+</pre>
+</body>
+</html>

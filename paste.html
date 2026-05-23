@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>paste</title>
+    <style>
+        body {
+            background: #111;
+            color: #c0c0c0;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 120ch;
+            padding: 0 1rem;
+            line-height: 1.4;
+        }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+    </style>
+</head>
+<body>
+<pre>
+title: paste
+summary: paste
+url: <a href="https://jnous.com/paste.html">https://jnous.com/paste.html</a>
+license: GPLv2
+keywords: paste subtract
+
+
+&larr; subtract.ing
+    For AI agents with filesystem access
+
+    
+        
+            Governance prompt
+            Copy
+        
+        Before you help me with anything on my system, read https://subtract.ing/governance
+
+If you can't fetch URLs, say so and I'll paste the content.
+
+Then tell me exactly what files you'll create or modify. List each file path. Explain what changes you'll make. Wait for me to say "proceed" before doing anything.
+
+Do this every time, for every task, until I tell you otherwise.
+    
+
+    
+        Any AI agent that can read, write, or execute on your machine.
+        The agent reads the governance page. It installs the four reflexes. Then it surfaces the diff before acting.
+        If your AI can't touch your files, you're already sandboxed. This is for when it can.
+    
+
+    
+        When you're tired of pasting this every time:
+        download subtract
+    
+
+    subtract.ing &middot; paste &middot; why &middot; lineage &middot; substrate &middot; signing &middot; time &middot; governance &middot; discipline &middot; github
+
+function copyPrompt() {
+    const text = document.getElementById('prompt-text').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+jnous.com                        2026-05-23                      JNOUS(7)
+</pre>
+</body>
+</html>

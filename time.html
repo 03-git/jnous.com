@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>time</title>
+    <style>
+        body {
+            background: #111;
+            color: #c0c0c0;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 120ch;
+            padding: 0 1rem;
+            line-height: 1.4;
+        }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+    </style>
+</head>
+<body>
+<pre>
+title: time
+summary: time
+url: <a href="https://jnous.com/time.html">https://jnous.com/time.html</a>
+license: GPLv2
+keywords: time subtract
+
+    subtract.ing / time
+
+    The scheduler is already running.
+    
+        The kernel's schedule() decides which process runs when.
+        It runs regardless of what you do.
+        The question is whether you cooperate with it directly or through seventeen layers.
+    
+Next: Governance
+
+    The constant
+    
+        Every Unix system has a scheduler. It has been running since boot.
+        It will run until shutdown. You cannot turn it off.
+        You cannot replace it. You can only speak to it.
+    
+    
+        The language it speaks is syscalls. When you call sleep(),
+        you are telling the scheduler: "don't schedule me for this long."
+        When you call waitpid(), you are saying: "don't schedule me
+        until this child exits." When you call select(), you are saying:
+        "don't schedule me until one of these file descriptors is ready."
+    
+    
+        These are not abstractions over scheduling. They are scheduling.
+        The scheduler understands them natively. Zero translation required.
+    
+
+    The layers
+    
+        When an AI agent needs to wait for something, the typical answer involves:
+    
+
+    
+        
+            Layer
+            What it does
+            What it costs
+        
+        
+            sleep 300
+            Tells kernel "don't schedule me for 5 min"
+            One syscall, zero CPU
+        
+        
+            asyncio.sleep()
+            Wraps the syscall, adds event loop
+            Runtime, memory, complexity
+        
+        
+            setTimeout()
+            Wraps the syscall, adds event loop
+            Runtime, memory, complexity
+        
+        
+            Kubernetes CronJob
+            Wraps cron, wraps kernel timers
+            Cluster, API server, etcd, YAML
+        
+        
+            SLURM
+            Wraps cgroups, wraps scheduler
+            Job queue, database, daemons
+        
+    
+
+    
+        Each layer sits beside the previous one. Each adds scheduling semantics
+        on top of a scheduler that was already running. Each costs something.
+    
+    
+        subtract asks: what if the agent just called sleep?
+    
+
+    The primitives
+    
+        The kernel already exports the verbs that cooperate with schedule():
+    
+    
+        sleep() / nanosleep() — yield for a duration
+        pause() — yield until a signal arrives
+        select() / poll() / epoll() — yield until I/O is ready
+        waitpid() — yield until a child process exits
+        inotify — yield until a filesystem event occurs
+    
+    
+        These are not waiting. These are not running. The process is removed
+        from the run queue. No CPU cycles. No polling. No busy-wait.
+        The scheduler will wake you when the condition is met.
+    
+
+    
+        
+            
+            
+            
+        
+        
+# Wait for 5 minutes, using zero CPU
+$ sleep 300
+
+# Run a command at a specific time
+$ echo "curl https://api.example.com/check" | at 3:00 PM
+
+# Run a command every hour
+$ crontab -e
+0 * * * * /path/to/script.sh
+
+# Wait for a file to appear
+$ inotifywait -e create /path/to/directory
+
+# Wait for a process to finish
+$ wait $PID
+        
+    
+
+    The third leg
+    
+        subtract has three legs. Each is a kernel primitive that shipped years ago.
+        Each is underused because the corpus taught frameworks instead.
+    
+
+    
+        
+            Leg
+            Primitive
+            Purpose
+        
+        
+            Entry
+            command_not_found_handle
+            Agent intent enters bash
+        
+        
+            Trust
+            ssh-keygen -Y
+            Agent operates within signed boundaries
+        
+        
+            Time
+            sleep, at, cron, inotify
+            Agent yields to kernel scheduler
+        
+    
+
+    
+        "Beside not instead" means: the scheduler is the constant.
+        Everything else is how clearly you ask it for what you need.
+    
+
+    What this replaces
+    
+        If an agent reaches for a "scheduling solution" today, it finds:
+    
+    
+        Message queues (Redis, RabbitMQ, SQS) — for "run this later"
+        Workflow orchestrators (Airflow, Temporal) — for "run this sequence"
+        Container schedulers (Kubernetes, Nomad) — for "run this somewhere"
+        Job schedulers (SLURM, PBS) — for "run this when resources free"
+        Polling loops — for "check repeatedly until done"
+    
+    
+        All of these wrap something that was already running.
+        The kernel scheduler doesn't need Redis to run a command in five minutes.
+        It needs sleep 300 && command.
+    
+    
+        The orchestration layers exist for cross-machine coordination, fault tolerance,
+        and resource management across clusters. If you have one machine and one task,
+        you have at. If you have a recurring task, you have cron.
+        If you need to wait for I/O, you have select.
+    
+    
+        The primitives are already there. The scheduler is already running.
+        The work is routing agents to speak to it directly.
+    
+    subtract.ing &middot; paste &middot; why &middot; lineage &middot; substrate &middot; signing &middot; time &middot; governance &middot; discipline &middot; github
+
+jnous.com                        2026-05-23                      JNOUS(7)
+</pre>
+</body>
+</html>

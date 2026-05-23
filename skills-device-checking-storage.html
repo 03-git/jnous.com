@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skills-device-checking-storage</title>
+    <style>
+        body {
+            background: #111;
+            color: #c0c0c0;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 120ch;
+            padding: 0 1rem;
+            line-height: 1.4;
+        }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+    </style>
+</head>
+<body>
+<pre>
+title: CHECKING STORAGE
+summary: check storage, disk full, free space, how much space, storage left
+url: <a href="https://jnous.com/skills-device-checking-storage.html">https://jnous.com/skills-device-checking-storage.html</a>
+license: GPLv2
+keywords: device disk storage space skill
+
+
+CHECKING STORAGE
+
+Steps:
+1. Overall disk space: df -h
+2. Current folder size: du -sh .
+3. Largest items here: du -sh * | sort -rh | head -10
+4. Find big files system-wide: find / -type f -size +100M 2&gt;/dev/null
+
+Notes:
+- df shows mounted filesystems. Look at the Use% column.
+- du -sh * shows size of each item in the current directory.
+- USB drives usually mount under /mnt/ or /media/.
+
+jnous.com                        2026-05-23                      JNOUS(7)
+</pre>
+</body>
+</html>

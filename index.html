@@ -27,59 +27,51 @@
         #grid .card .num { color: #666; }
         #grid .card .kw { color: #555; font-size: 0.85rem; }
         #grid .card a { display: block; margin-bottom: 0.2rem; }
+        #grid .card .summary { color: #999; font-size: 0.9rem; }
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 <pre>
 title: jnous.com
-summary: Variance-lab findings. Empirical measurements of local LLM reliability, governance binding, and inference economics.
+summary: Projects, runtimes, and thoughts by Park/Joshua (@hodorigami).
 url: https://jnous.com
-author: Josh (@hodorigami)
+author: Park/Joshua (@hodorigami)
 license: GPLv2
-keywords: variance-lab findings empirical local-LLM inference governance measurement methodology
+keywords: subtract lookdown variance-lab governance hosuni parsimony squared multiplying findings
+findings: <a href="/findings.md">/findings.md</a> (TSV: slug, title, summary, keywords)
 
 
-JNOUS.COM
+JNOUS(7)                                                              JNOUS(7)
 
 NAME
-       jnous - variance-lab findings from empirical local LLM measurement
+       jnous — projects, runtimes, and thoughts by Park/Joshua (@hodorigami)
+
+SYNOPSIS
+       curl -s https://jnous.com/findings.md | while IFS=$'\t' read slug title summary kw; do
+           echo "$slug: $title"; done
 
 DESCRIPTION
-       Findings from 105,000+ inferences across 28 models. Each finding states
-       what was tested, what was measured, and what the data showed. No theory
-       without data. No data without method.
+       Projects, runtimes, skills, and findings. Each page uses the same
+       template with visible frontmatter as first bytes on the wire.
+       
 
-FINDINGS
 </pre>
-<input type="text" id="search" placeholder="search findings...">
+<input type="text" id="search" placeholder="search...">
 <div id="cloud"></div>
 <div id="grid"></div>
 <pre id="nojs-list">
-       <a href="/three-questions.html">01. three-questions</a>
-       <a href="/delegation-vs-inline.html">02. delegation-vs-inline</a>
-       <a href="/interaction-mode-variance.html">03. interaction-mode-variance</a>
-       <a href="/authorization-gap.html">04. authorization-gap</a>
-       <a href="/governance-binding.html">05. governance-binding</a>
-       <a href="/interaction-mode-rerun.html">06. interaction-mode-rerun</a>
-       <a href="/http2-vs-http1.html">07. http2-vs-http1</a>
-       <a href="/1bit-quantization.html">08. 1bit-quantization</a>
-       <a href="/1bit-hardware-tiers.html">09. 1bit-hardware-tiers</a>
-       <a href="/throughput-ceiling.html">10. throughput-ceiling</a>
-       <a href="/review-vs-verification.html">11. review-vs-verification</a>
-       <a href="/lookdown-routing.html">12. lookdown-routing</a>
-       <a href="/manifest-vs-bm25.html">13. manifest-vs-bm25</a>
-       <a href="/governance-refusal.html">14. governance-refusal</a>
-       <a href="/reflex-binding.html">15. reflex-binding</a>
-       <a href="/effort-dependent-binding.html">16. effort-dependent-binding</a>
-       <a href="/handler-substrate-selection.html">17. handler-substrate-selection</a>
+       Manifest: <a href="/findings.md">/findings.md</a> (TSV)
 </pre>
 <pre>
-DATA
-       Raw data: <a href="https://github.com/03-git/variance-lab">github.com/03-git/variance-lab</a>
-       Substrate: <a href="https://subtract.ing">subtract.ing</a>
 
-jnous.com
+SEE ALSO
+       <a href="https://subtract.ing">subtract.ing</a>, <a href="https://github.com/03-git">github.com/03-git</a>
+
+AUTHORS
+       Park/Joshua (@hodorigami)
+
+jnous.com                        2026-05-23                          JNOUS(7)
 </pre>
 <script>
 (function(){
@@ -95,72 +87,53 @@ jnous.com
     var allKw = {};
     var findings = [];
 
+    function pad(n){ return ('00' + n).slice(-3); }
+
+    function esc(s){ return s.replace(/'/g, "\\'"); }
+
     fetch('/findings.md').then(function(r){ return r.text(); }).then(function(text){
-        var slugs = text.trim().split('\n').filter(function(s){ return s.trim(); });
-        var loaded = 0;
-        slugs.forEach(function(slug, i){
-            var x = new XMLHttpRequest();
-            x.open('GET', '/' + slug + '.html');
-            x.onload = function(){
-                var pre = x.responseText.match(/<pre[^>]*>([\s\S]*?)<\/pre>/);
-                if (!pre) { loaded++; return; }
-                var block = pre[1];
-                var get = function(key){
-                    var m = block.match(new RegExp('^' + key + ':\\s*(.+)', 'm'));
-                    return m ? m[1].replace(/<[^>]+>/g,'').trim() : '';
-                };
-                findings[i] = {
-                    slug: slug,
-                    title: get('title'),
-                    summary: get('summary'),
-                    keywords: get('keywords'),
-                    num: String(i+1).length < 2 ? '0'+(i+1) : String(i+1)
-                };
-                findings[i].keywords.split(/\s+/).forEach(function(w){
-                    if (w) allKw[w.toLowerCase()] = (allKw[w.toLowerCase()]||0) + 1;
-                });
-                loaded++;
-                if (loaded === slugs.length) render();
+        var lines = text.trim().split('\n').filter(function(s){ return s.trim(); });
+        lines.forEach(function(line, i){
+            var cols = line.split('\t');
+            if (cols.length < 4) return;
+            findings[i] = {
+                slug: cols[0],
+                title: cols[1],
+                summary: cols[2],
+                keywords: cols[3],
+                num: pad(i + 1)
             };
-            x.send();
-        });
-
-        function render(){
-            nojsList.style.display = 'none';
-            grid.innerHTML = '';
-            findings.forEach(function(f){
-                if (!f) return;
-                var topkw = f.keywords.split(/\s+/).slice(0,3).join(' ');
-                var short = f.summary.length > 60 ? f.summary.substring(0,57)+'...' : f.summary;
-                var div = document.createElement('div');
-                div.className = 'card finding';
-                div.dataset.kw = f.keywords;
-                div.innerHTML = '<span class="num">'+f.num+'</span> <a href="/'+f.slug+'.html">'+f.title+'</a>'+short+'<br><span class="kw">'+topkw+'</span>';
-                grid.appendChild(div);
+            findings[i].keywords.split(/\s+/).forEach(function(w){
+                if (w) allKw[w.toLowerCase()] = (allKw[w.toLowerCase()]||0) + 1;
             });
-            buildCloud();
-        }
-
-        // populate nojs fallback immediately from slugs
-        var lines = '';
-        slugs.forEach(function(slug, i){
-            var num = String(i+1).length < 2 ? '0'+(i+1) : String(i+1);
-            lines += '       <a href="/'+slug+'.html">'+num+'. '+slug+'</a>\n';
         });
-        nojsList.innerHTML = lines;
+        nojsList.style.display = 'none';
+        grid.innerHTML = '';
+        findings.forEach(function(f){
+            if (!f) return;
+            var topkw = f.keywords.split(/\s+/).slice(0,3).join(' ');
+            var short = f.summary.length > 60 ? f.summary.substring(0,57)+'...' : f.summary;
+            var div = document.createElement('div');
+            div.className = 'card finding';
+            div.dataset.kw = f.keywords;
+            div.innerHTML = '<span class="num">'+f.num+'</span> <a href="/'+f.slug+'.html">'+f.title+'</a> <span class="summary">&mdash; '+short+'</span><br><span class="kw">'+topkw+'</span>';
+            grid.appendChild(div);
+        });
+        buildCloud();
     });
 
     function buildCloud(){
         var sorted = Object.keys(allKw).sort(function(a,b){ return allKw[b]-allKw[a]; });
-        var boost = Object.keys(searches).sort(function(a,b){ return searches[b]-searches[a]; });
+        var hasHistory = Object.keys(searches).length > 0;
+        var boost = hasHistory ? Object.keys(searches).sort(function(a,b){ return searches[b]-searches[a]; }) : [];
         var top = [];
         boost.forEach(function(w){ if (top.length < 8) top.push(w); });
         sorted.forEach(function(w){ if (top.indexOf(w) === -1 && top.length < 24) top.push(w); });
         cloud.innerHTML = top.map(function(w){
             var s = searches[w] || 0;
-            var size = Math.min(1.3, 0.75 + s * 0.08);
-            return '<span style="font-size:'+size+'rem" onclick="document.getElementById(\'search\').value=\''+w+'\';document.getElementById(\'search\').dispatchEvent(new Event(\'input\'))">'+w+'</span>';
-        }).join('');
+            var size = hasHistory ? Math.min(1.3, 0.75 + s * 0.08) : 0.85;
+            return '<span style="font-size:'+size+'rem" onclick="document.getElementById(\'search\').value=\''+esc(w)+'\';document.getElementById(\'search\').dispatchEvent(new Event(\'input\'))">'+w+'</span>';
+        }).join(' ');
     }
 
     search.addEventListener('input', function(){

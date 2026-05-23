@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skills-device-adjusting-display</title>
+    <style>
+        body {
+            background: #111;
+            color: #c0c0c0;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 120ch;
+            padding: 0 1rem;
+            line-height: 1.4;
+        }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+    </style>
+</head>
+<body>
+<pre>
+title: ADJUSTING DISPLAY
+summary: change brightness, screen brightness, dim screen, display settings, adjust brigh
+url: <a href="https://jnous.com/skills-device-adjusting-display.html">https://jnous.com/skills-device-adjusting-display.html</a>
+license: GPLv2
+keywords: device display screen accessibility skill
+
+
+ADJUSTING DISPLAY
+
+Brightness:
+1. Find your backlight: ls /sys/class/backlight/
+2. Read current: cat /sys/class/backlight/*/brightness
+3. Read max: cat /sys/class/backlight/*/max_brightness
+4. Set (requires root): echo 100 | sudo tee /sys/class/backlight/*/brightness
+
+Resolution:
+1. List outputs: xrandr (X11) or wlr-randr (Wayland)
+2. Change: xrandr --output HDMI-1 --mode 1920x1080
+
+Notes:
+- On laptops, function keys (Fn+F5/F6) often work without commands.
+- Cog renderer: display is managed by the compositor, not these commands.
+
+jnous.com                        2026-05-23                      JNOUS(7)
+</pre>
+</body>
+</html>
