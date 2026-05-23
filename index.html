@@ -95,7 +95,7 @@ jnous.com
     var allKw = {};
     var findings = [];
 
-    fetch('/findings.txt').then(function(r){ return r.text(); }).then(function(text){
+    fetch('/findings.md').then(function(r){ return r.text(); }).then(function(text){
         var slugs = text.trim().split('\n').filter(function(s){ return s.trim(); });
         var loaded = 0;
         slugs.forEach(function(slug, i){
