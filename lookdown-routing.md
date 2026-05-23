@@ -36,4 +36,4 @@ THE ROUTING DECISION
        on every query the table could have answered.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/12-lookdown-routing.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/12-lookdown-routing.txt

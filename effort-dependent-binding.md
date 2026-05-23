@@ -37,4 +37,4 @@ IMPLICATION
        effort-tier variation.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/16-effort-dependent-binding.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/16-effort-dependent-binding.txt

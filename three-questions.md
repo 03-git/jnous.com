@@ -53,4 +53,4 @@ EMPIRICAL
        Capability subtraction (derived from question 3): $0.02/call, no bypass.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/01-three-questions.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/01-three-questions.txt

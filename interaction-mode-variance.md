@@ -30,4 +30,4 @@ WHY THIS MATTERS
        Token cost is a function of human attention, not model capability.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/03-interaction-mode-variance.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/03-interaction-mode-variance.txt

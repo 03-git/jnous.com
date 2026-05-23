@@ -38,4 +38,4 @@ WHY
        why they wrote them.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/13-manifest-vs-bm25.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/13-manifest-vs-bm25.txt

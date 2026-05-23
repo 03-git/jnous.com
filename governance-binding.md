@@ -41,4 +41,4 @@ WHAT BINDS VS WHAT DOESN'T
        adapter.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/05-governance-binding.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/05-governance-binding.txt

@@ -36,4 +36,4 @@ TWO CEILINGS
        clean window.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/02-delegation-vs-inline.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/02-delegation-vs-inline.txt

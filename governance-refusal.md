@@ -32,4 +32,4 @@ WHY THIS MATTERS
        follows governance rules when nobody is testing is governed.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/14-governance-refusal.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/14-governance-refusal.txt

@@ -33,4 +33,4 @@ WHY THIS MATTERS
        zero. Worse than zero is still more than zero.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/08-1bit-quantization.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/08-1bit-quantization.txt

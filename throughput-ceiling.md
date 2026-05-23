@@ -37,4 +37,4 @@ IMPLICATION
        power, more heat, same output.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/10-throughput-ceiling.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/10-throughput-ceiling.txt

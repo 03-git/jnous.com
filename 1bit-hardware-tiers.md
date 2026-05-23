@@ -35,4 +35,4 @@ WHY THE BOTTLENECK SHIFTS
        The right choice depends on which resource is scarce.
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/09-1bit-hardware-tiers.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/09-1bit-hardware-tiers.txt

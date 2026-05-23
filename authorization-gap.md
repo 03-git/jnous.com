@@ -32,4 +32,4 @@ IMPLICATION
        "the agent can't log in."
 
 DATA
-       raw.githubusercontent.com/03-git/variance-lab/main/findings/04-authorization-gap.txt
+       raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/04-authorization-gap.txt
