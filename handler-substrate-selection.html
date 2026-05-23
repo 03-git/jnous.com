@@ -1,7 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>handler-substrate-selection</title>
+    <style>
+        body {
+            background: #111;
+            color: #c0c0c0;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 120ch;
+            padding: 0 1rem;
+            line-height: 1.4;
+        }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+    </style>
+</head>
+<body>
+<pre>
 title: Handler Substrate Selection
 summary: Three-gate methodology for picking which model runs handler.sh. 240 trials, 3 models. nano-4b wins (TC 3.05, 6.5s wall). The 14b model cannot dispatch at all — 0% tool calls, confabulates output.
 date: 2026-05-10
-url: https://jnous.com/handler-substrate-selection.md
+url: https://jnous.com/handler-substrate-selection.html
 source: production empirical (240 trials, 3 models, three-gate methodology)
 license: GPLv2
 
@@ -38,3 +61,6 @@ THREE-GATE METHOD
 
 DATA
        raw.githubusercontent.com/03-git/variance-lab/refs/heads/main/findings/17-handler-substrate-selection.txt
+</pre>
+</body>
+</html>
