@@ -17,6 +17,18 @@
         pre { white-space: pre-wrap; margin: 0; }
         a { color: #8be9fd; }
         a:visited { color: #bd93f9; }
+        #search { background: #222; color: #c0c0c0; border: 1px solid #444; font-family: monospace; font-size: 1rem; padding: 0.3rem 0.5rem; width: 60ch; display: none; }
+        #search:focus { border-color: #8be9fd; outline: none; }
+        #cloud { color: #666; margin: 0.5rem 0 1rem 0; display: none; line-height: 2; }
+        #cloud span { cursor: pointer; margin-right: 1.5ch; }
+        #cloud span:hover { color: #8be9fd; }
+        #grid { display: none; flex-wrap: wrap; gap: 0; }
+        #grid .card { width: 38ch; padding: 0.5rem 1ch; vertical-align: top; }
+        #grid .card .num { color: #666; }
+        #grid .card .kw { color: #555; font-size: 0.85rem; }
+        #grid .card a { display: block; margin-bottom: 0.2rem; }
+        .hidden { display: none !important; }
+        #noscript-list pre { margin: 0; }
     </style>
 </head>
 <body>
@@ -26,7 +38,7 @@ summary: Variance-lab findings. Empirical measurements of local LLM reliability,
 url: https://jnous.com
 author: Josh (@hodorigami)
 license: GPLv2
-verify: ssh-keygen -Y verify -f authorized_signers -I hodori@subtract.ing -n subtract.ing -s llms.txt.sig &lt; llms.txt
+keywords: governance binding adapter LoRA quantization 1-bit 8GB routing inference tokens cost passenger governor effort compliance retrieval concurrency throughput ceiling model-selection dispatch delegation autonomy authorization
 
 
 JNOUS.COM
@@ -40,63 +52,104 @@ DESCRIPTION
        without data. No data without method.
 
 FINDINGS
-
+</pre>
+<input type="text" id="search" placeholder="search findings...">
+<div id="cloud"></div>
+<div id="grid">
+<div class="card finding" data-kw="autonomy intake consulting workflow human blocker access subtractive security"><span class="num">01</span> <a href="/three-questions.html">Three Questions</a>human boundary, blockers, subtractive access<br><span class="kw">autonomy intake workflow</span></div>
+<div class="card finding" data-kw="delegation parallel nodes topology context latency wall-clock"><span class="num">02</span> <a href="/delegation-vs-inline.html">Delegation vs Inline</a>48% wall clock across 3 nodes<br><span class="kw">delegation parallel topology</span></div>
+<div class="card finding" data-kw="passenger governor tokens cost attention mode session"><span class="num">03</span> <a href="/interaction-mode-variance.html">Interaction Mode</a>41x token ratio passenger vs governor<br><span class="kw">passenger tokens cost</span></div>
+<div class="card finding" data-kw="authorization auth login infrastructure capability agent OAuth MFA"><span class="num">04</span> <a href="/authorization-gap.html">Authorization Gap</a>agents fail at auth, not capability<br><span class="kw">auth infrastructure login</span></div>
+<div class="card finding" data-kw="governance binding adapter reflex compliance LoRA weights"><span class="num">05</span> <a href="/governance-binding.html">Governance Binding</a>81% at N=30, reflex-dependent<br><span class="kw">governance adapter binding</span></div>
+<div class="card finding" data-kw="passenger governor tokens replication rubric rerun 52x"><span class="num">06</span> <a href="/interaction-mode-rerun.html">Mode Rerun</a>52.7x under pre-committed rubric, N=501<br><span class="kw">replication rubric tokens</span></div>
+<div class="card finding" data-kw="HTTP/2 multiplexing throughput concurrency inference wire protocol"><span class="num">07</span> <a href="/http2-vs-http1.html">HTTP/2 vs HTTP/1.1</a>2.1x throughput via multiplexing<br><span class="kw">HTTP/2 concurrency throughput</span></div>
+<div class="card finding" data-kw="1-bit quantization 8GB deployment ceiling memory RAM"><span class="num">08</span> <a href="/1bit-quantization.html">1-Bit Quantization</a>breaks the 8GB ceiling<br><span class="kw">1-bit 8GB quantization</span></div>
+<div class="card finding" data-kw="1-bit hardware tiers memory bandwidth compute bottleneck"><span class="num">09</span> <a href="/1bit-hardware-tiers.html">1-Bit Hardware Tiers</a>wins across 4 tiers, different reasons<br><span class="kw">hardware bandwidth bottleneck</span></div>
+<div class="card finding" data-kw="throughput ceiling concurrency saturation memory bandwidth scaling"><span class="num">10</span> <a href="/throughput-ceiling.html">Throughput Ceiling</a>plateaus at hardware limit<br><span class="kw">ceiling concurrency scaling</span></div>
+<div class="card finding" data-kw="code review verification crash cheaper model effort inversion"><span class="num">11</span> <a href="/review-vs-verification.html">Review vs Verification</a>cheaper model found the crash path<br><span class="kw">review crash effort-inversion</span></div>
+<div class="card finding" data-kw="lookdown grep routing TSV inference known-answer retrieval"><span class="num">12</span> <a href="/lookdown-routing.html">Lookdown Routing</a>grep beats inference for known answers<br><span class="kw">grep routing lookdown</span></div>
+<div class="card finding" data-kw="manifest BM25 retrieval routing corpus search"><span class="num">13</span> <a href="/manifest-vs-bm25.html">Manifest vs BM25</a>manifest beats term-frequency retrieval<br><span class="kw">manifest retrieval BM25</span></div>
+<div class="card finding" data-kw="governance refusal adapter in-vivo production wild binding"><span class="num">14</span> <a href="/governance-refusal.html">Governance Refusal</a>adapter refused without instruction<br><span class="kw">refusal adapter in-vivo</span></div>
+<div class="card finding" data-kw="reflex binding lineage instruction transfer adapter weights LoRA"><span class="num">15</span> <a href="/reflex-binding.html">Reflex Binding</a>lineage transfers, instruction doesn't<br><span class="kw">lineage weights LoRA</span></div>
+<div class="card finding" data-kw="effort tier binding compliance frontier model compute"><span class="num">16</span> <a href="/effort-dependent-binding.html">Effort-Dependent Binding</a>higher effort != better compliance<br><span class="kw">effort tier compliance</span></div>
+<div class="card finding" data-kw="handler substrate model selection dispatch tool-call gate"><span class="num">17</span> <a href="/handler-substrate-selection.html">Handler Substrate</a>three-gate model selection, 240 trials<br><span class="kw">dispatch model-selection gate</span></div>
+</div>
+<div id="noscript-list">
+<pre>
        <a href="/three-questions.html">01. Three Questions for Agentic Autonomy</a>
-           Universal intake: human boundary, autonomy blockers, subtractive access.
-
        <a href="/delegation-vs-inline.html">02. Delegation vs Inline Execution</a>
-           Delegated parallel: 48% wall clock of single-context. No context contamination.
-
        <a href="/interaction-mode-variance.html">03. Interaction Mode Variance</a>
-           Passenger mode: 41x tokens vs governor mode. 88 sessions, single operator.
-
        <a href="/authorization-gap.html">04. Delegated Agent Authorization Gap</a>
-           Agents fail at auth boundaries, not capability boundaries.
-
        <a href="/governance-binding.html">05. Governance Binding</a>
-           Governance binds at N=30: 81% overall. Reflex-dependent. Delivery-path sensitive.
-
        <a href="/interaction-mode-rerun.html">06. Interaction Mode Rerun</a>
-           52.7x passenger/governor under pre-committed rubric. N=501 qualifying sessions.
-
        <a href="/http2-vs-http1.html">07. HTTP/2 vs HTTP/1.1</a>
-           HTTP/2 multiplexing: 2.1x throughput for local inference concurrency.
-
        <a href="/1bit-quantization.html">08. 1-Bit Quantization</a>
-           1-bit breaks the 8GB deployment ceiling. Bonsai 8B on 8GB M2 Mini.
-
        <a href="/1bit-hardware-tiers.html">09. 1-Bit Across Hardware Tiers</a>
-           1-bit wins across 4 tiers. The bottleneck differs per tier.
-
        <a href="/throughput-ceiling.html">10. Throughput Ceiling</a>
-           Aggregate inference plateaus at a hardware-determined ceiling.
-
        <a href="/review-vs-verification.html">11. Review vs Verification</a>
-           Cheaper model finds crash path expensive model misses.
-
        <a href="/lookdown-routing.html">12. Lookdown Routing</a>
-           grep beats inference for known-answer retrieval.
-
        <a href="/manifest-vs-bm25.html">13. Manifest vs BM25</a>
-           Manifest-routed retrieval beats BM25 for small-corpus QA.
-
        <a href="/governance-refusal.html">14. Governance Refusal</a>
-           In-vivo reproduction of finding 5 during scorer calibration.
-
        <a href="/reflex-binding.html">15. Reflex Binding</a>
-           Abstract reflexes transfer only with lineage, not instruction.
-
        <a href="/effort-dependent-binding.html">16. Effort-Dependent Binding</a>
-           Governance binding varies by effort tier. 4 models, 1872 trials.
-
        <a href="/handler-substrate-selection.html">17. Handler Substrate Selection</a>
-           Three-gate methodology for substrate-code model selection.
-
+</pre>
+</div>
+<pre>
 DATA
        Raw data: <a href="https://github.com/03-git/variance-lab">github.com/03-git/variance-lab</a>
        Substrate: <a href="https://subtract.ing">subtract.ing</a>
 
 jnous.com                                                                                    jnous.com
 </pre>
+<script>
+(function(){
+    document.getElementById('search').style.display = 'block';
+    document.getElementById('cloud').style.display = 'block';
+    document.getElementById('grid').style.display = 'flex';
+    document.getElementById('noscript-list').style.display = 'none';
+
+    var search = document.getElementById('search');
+    var cloud = document.getElementById('cloud');
+    var cards = document.querySelectorAll('.finding');
+    var searches = JSON.parse(localStorage.getItem('jnous-searches') || '{}');
+
+    var allKw = {};
+    cards.forEach(function(c){
+        (c.dataset.kw || '').split(/\s+/).forEach(function(w){
+            if (w) allKw[w.toLowerCase()] = (allKw[w.toLowerCase()]||0) + 1;
+        });
+    });
+
+    function buildCloud(){
+        var sorted = Object.keys(allKw).sort(function(a,b){ return allKw[b]-allKw[a]; });
+        var boost = Object.keys(searches).sort(function(a,b){ return searches[b]-searches[a]; });
+        var top = [];
+        boost.forEach(function(w){ if (top.length < 8) top.push(w); });
+        sorted.forEach(function(w){ if (top.indexOf(w) === -1 && top.length < 24) top.push(w); });
+        cloud.innerHTML = top.map(function(w){
+            var s = searches[w] || 0;
+            var size = Math.min(1.3, 0.75 + s * 0.08);
+            return '<span style="font-size:'+size+'rem" onclick="document.getElementById(\'search\').value=\''+w+'\';document.getElementById(\'search\').dispatchEvent(new Event(\'input\'))">'+w+'</span>';
+        }).join('');
+    }
+    buildCloud();
+
+    search.addEventListener('input', function(){
+        var q = search.value.toLowerCase().trim();
+        if (q.length > 2) {
+            searches[q] = (searches[q]||0) + 1;
+            localStorage.setItem('jnous-searches', JSON.stringify(searches));
+        }
+        cards.forEach(function(c){
+            if (!q) { c.classList.remove('hidden'); return; }
+            var text = (c.textContent + ' ' + (c.dataset.kw||'')).toLowerCase();
+            if (text.indexOf(q) !== -1) c.classList.remove('hidden');
+            else c.classList.add('hidden');
+        });
+        if (q.length > 2) buildCloud();
+    });
+})();
+</script>
 </body>
 </html>
