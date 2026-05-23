@@ -23,12 +23,11 @@
         #cloud span { cursor: pointer; margin-right: 1.5ch; }
         #cloud span:hover { color: #8be9fd; }
         #grid { display: none; flex-wrap: wrap; gap: 0; }
-        #grid .card { width: 38ch; padding: 0.5rem 1ch; vertical-align: top; }
+        #grid .card { width: 38ch; padding: 0.5rem 1ch; }
         #grid .card .num { color: #666; }
         #grid .card .kw { color: #555; font-size: 0.85rem; }
         #grid .card a { display: block; margin-bottom: 0.2rem; }
         .hidden { display: none !important; }
-        #noscript-list pre { margin: 0; }
     </style>
 </head>
 <body>
@@ -47,7 +46,7 @@ NAME
        jnous - variance-lab findings from empirical local LLM measurement
 
 DESCRIPTION
-       17 findings from 105,000+ inferences across 28 models. Each finding states
+       Findings from 105,000+ inferences across 28 models. Each finding states
        what was tested, what was measured, and what the data showed. No theory
        without data. No data without method.
 
@@ -55,46 +54,26 @@ FINDINGS
 </pre>
 <input type="text" id="search" placeholder="search findings...">
 <div id="cloud"></div>
-<div id="grid">
-<div class="card finding" data-kw="autonomy automation intake workflow blocker access subtractive-security methodology capability-boundary assessment"><span class="num">01</span> <a href="/three-questions.html">Three Questions</a>human boundary, blockers, subtractive access<br><span class="kw">autonomy methodology blocker</span></div>
-<div class="card finding" data-kw="delegation parallel execution multi-agent context-window sequential fresh-context speedup wall-clock"><span class="num">02</span> <a href="/delegation-vs-inline.html">Delegation vs Inline</a>48% wall clock across 3 nodes<br><span class="kw">delegation parallel context-window</span></div>
-<div class="card finding" data-kw="passenger governor tokens cost human-attention mode 41x ratio original"><span class="num">03</span> <a href="/interaction-mode-variance.html">Interaction Mode</a>41x token ratio passenger vs governor<br><span class="kw">passenger tokens 41x cost</span></div>
-<div class="card finding" data-kw="authorization agent failure auth OAuth MFA browser-redirect automation-blocker infrastructure headless"><span class="num">04</span> <a href="/authorization-gap.html">Authorization Gap</a>agents fail at auth, not capability<br><span class="kw">auth agent-failure infrastructure</span></div>
-<div class="card finding" data-kw="governance binding adapter reflex compliance weights delivery-path system-prompt SmolLM alignment"><span class="num">05</span> <a href="/governance-binding.html">Governance Binding</a>81% at N=30, reflex-dependent<br><span class="kw">governance adapter delivery-path</span></div>
-<div class="card finding" data-kw="passenger governor tokens cost replication methodology pre-committed rubric 52x validation"><span class="num">06</span> <a href="/interaction-mode-rerun.html">Mode Rerun</a>52.7x under pre-committed rubric, N=501<br><span class="kw">replication 52x rubric</span></div>
-<div class="card finding" data-kw="HTTP/2 HTTP/1.1 multiplexing llama-server local-inference concurrency throughput protocol Apple-Silicon"><span class="num">07</span> <a href="/http2-vs-http1.html">HTTP/2 vs HTTP/1.1</a>2.1x throughput via multiplexing<br><span class="kw">HTTP/2 llama-server concurrency</span></div>
-<div class="card finding" data-kw="1-bit quantization 8GB 8B deployment local-inference ceiling RAM Q4 Q8"><span class="num">08</span> <a href="/1bit-quantization.html">1-Bit Quantization</a>breaks the 8GB ceiling<br><span class="kw">1-bit 8GB Q4 Q8</span></div>
-<div class="card finding" data-kw="1-bit Q4 Q8 quantization-comparison hardware-tiers memory-bandwidth compute bottleneck 8GB 64GB scaling"><span class="num">09</span> <a href="/1bit-hardware-tiers.html">1-Bit Hardware Tiers</a>wins across 4 tiers, different reasons<br><span class="kw">hardware-tiers bandwidth scaling</span></div>
-<div class="card finding" data-kw="throughput ceiling concurrency saturation memory-bandwidth scaling plateau optimal-concurrency Apple-Silicon"><span class="num">10</span> <a href="/throughput-ceiling.html">Throughput Ceiling</a>plateaus at hardware limit<br><span class="kw">ceiling plateau Apple-Silicon</span></div>
-<div class="card finding" data-kw="code-review verification crash effort-inversion cheaper-model C functional-testing three-gate"><span class="num">11</span> <a href="/review-vs-verification.html">Review vs Verification</a>cheaper model found the crash path<br><span class="kw">crash effort-inversion three-gate</span></div>
-<div class="card finding" data-kw="routing grep TSV lookup known-answer fast-path skip-inference deterministic retrieval"><span class="num">12</span> <a href="/lookdown-routing.html">Lookdown Routing</a>grep beats inference for known answers<br><span class="kw">grep fast-path skip-inference</span></div>
-<div class="card finding" data-kw="retrieval BM25 RAG small-corpus curated routing document-selection human-curated"><span class="num">13</span> <a href="/manifest-vs-bm25.html">Manifest vs BM25</a>manifest beats term-frequency retrieval<br><span class="kw">RAG BM25 small-corpus</span></div>
-<div class="card finding" data-kw="governance refusal production real-world unprompted adapter validation emergent alignment"><span class="num">14</span> <a href="/governance-refusal.html">Governance Refusal</a>adapter refused without instruction<br><span class="kw">refusal unprompted real-world</span></div>
-<div class="card finding" data-kw="binding lineage instruction fine-tune weights LoRA system-prompt trained prompted disposition alignment"><span class="num">15</span> <a href="/reflex-binding.html">Reflex Binding</a>lineage transfers, instruction doesn't<br><span class="kw">lineage fine-tune disposition</span></div>
-<div class="card finding" data-kw="effort tier extended-thinking compliance governance alignment non-monotonic compute-budget reasoning"><span class="num">16</span> <a href="/effort-dependent-binding.html">Effort-Dependent Binding</a>higher effort != better compliance<br><span class="kw">effort non-monotonic reasoning</span></div>
-<div class="card finding" data-kw="handler model-selection tool-call function-calling dispatch gate nano confabulation small-model"><span class="num">17</span> <a href="/handler-substrate-selection.html">Handler Substrate</a>three-gate model selection, 240 trials<br><span class="kw">tool-call confabulation small-model</span></div>
-</div>
-<div id="noscript-list">
-<pre>
-       <a href="/three-questions.html">01. Three Questions for Agentic Autonomy</a>
-       <a href="/delegation-vs-inline.html">02. Delegation vs Inline Execution</a>
-       <a href="/interaction-mode-variance.html">03. Interaction Mode Variance</a>
-       <a href="/authorization-gap.html">04. Delegated Agent Authorization Gap</a>
-       <a href="/governance-binding.html">05. Governance Binding</a>
-       <a href="/interaction-mode-rerun.html">06. Interaction Mode Rerun</a>
-       <a href="/http2-vs-http1.html">07. HTTP/2 vs HTTP/1.1</a>
-       <a href="/1bit-quantization.html">08. 1-Bit Quantization</a>
-       <a href="/1bit-hardware-tiers.html">09. 1-Bit Across Hardware Tiers</a>
-       <a href="/throughput-ceiling.html">10. Throughput Ceiling</a>
-       <a href="/review-vs-verification.html">11. Review vs Verification</a>
-       <a href="/lookdown-routing.html">12. Lookdown Routing</a>
-       <a href="/manifest-vs-bm25.html">13. Manifest vs BM25</a>
-       <a href="/governance-refusal.html">14. Governance Refusal</a>
-       <a href="/reflex-binding.html">15. Reflex Binding</a>
-       <a href="/effort-dependent-binding.html">16. Effort-Dependent Binding</a>
-       <a href="/handler-substrate-selection.html">17. Handler Substrate Selection</a>
+<div id="grid"></div>
+<pre id="nojs-list">
+       <a href="/three-questions.html">01. three-questions</a>
+       <a href="/delegation-vs-inline.html">02. delegation-vs-inline</a>
+       <a href="/interaction-mode-variance.html">03. interaction-mode-variance</a>
+       <a href="/authorization-gap.html">04. authorization-gap</a>
+       <a href="/governance-binding.html">05. governance-binding</a>
+       <a href="/interaction-mode-rerun.html">06. interaction-mode-rerun</a>
+       <a href="/http2-vs-http1.html">07. http2-vs-http1</a>
+       <a href="/1bit-quantization.html">08. 1bit-quantization</a>
+       <a href="/1bit-hardware-tiers.html">09. 1bit-hardware-tiers</a>
+       <a href="/throughput-ceiling.html">10. throughput-ceiling</a>
+       <a href="/review-vs-verification.html">11. review-vs-verification</a>
+       <a href="/lookdown-routing.html">12. lookdown-routing</a>
+       <a href="/manifest-vs-bm25.html">13. manifest-vs-bm25</a>
+       <a href="/governance-refusal.html">14. governance-refusal</a>
+       <a href="/reflex-binding.html">15. reflex-binding</a>
+       <a href="/effort-dependent-binding.html">16. effort-dependent-binding</a>
+       <a href="/handler-substrate-selection.html">17. handler-substrate-selection</a>
 </pre>
-</div>
 <pre>
 DATA
        Raw data: <a href="https://github.com/03-git/variance-lab">github.com/03-git/variance-lab</a>
@@ -104,21 +83,71 @@ jnous.com
 </pre>
 <script>
 (function(){
-    document.getElementById('search').style.display = 'block';
-    document.getElementById('cloud').style.display = 'block';
-    document.getElementById('grid').style.display = 'flex';
-    document.getElementById('noscript-list').style.display = 'none';
-
     var search = document.getElementById('search');
     var cloud = document.getElementById('cloud');
-    var cards = document.querySelectorAll('.finding');
-    var searches = JSON.parse(localStorage.getItem('jnous-searches') || '{}');
+    var grid = document.getElementById('grid');
+    var nojsList = document.getElementById('nojs-list');
+    search.style.display = 'block';
+    cloud.style.display = 'block';
+    grid.style.display = 'flex';
 
+    var searches = JSON.parse(localStorage.getItem('jnous-searches') || '{}');
     var allKw = {};
-    cards.forEach(function(c){
-        (c.dataset.kw || '').split(/\s+/).forEach(function(w){
-            if (w) allKw[w.toLowerCase()] = (allKw[w.toLowerCase()]||0) + 1;
+    var findings = [];
+
+    fetch('/findings.txt').then(function(r){ return r.text(); }).then(function(text){
+        var slugs = text.trim().split('\n').filter(function(s){ return s.trim(); });
+        var loaded = 0;
+        slugs.forEach(function(slug, i){
+            var x = new XMLHttpRequest();
+            x.open('GET', '/' + slug + '.html');
+            x.onload = function(){
+                var pre = x.responseText.match(/<pre[^>]*>([\s\S]*?)<\/pre>/);
+                if (!pre) { loaded++; return; }
+                var block = pre[1];
+                var get = function(key){
+                    var m = block.match(new RegExp('^' + key + ':\\s*(.+)', 'm'));
+                    return m ? m[1].replace(/<[^>]+>/g,'').trim() : '';
+                };
+                findings[i] = {
+                    slug: slug,
+                    title: get('title'),
+                    summary: get('summary'),
+                    keywords: get('keywords'),
+                    num: String(i+1).length < 2 ? '0'+(i+1) : String(i+1)
+                };
+                findings[i].keywords.split(/\s+/).forEach(function(w){
+                    if (w) allKw[w.toLowerCase()] = (allKw[w.toLowerCase()]||0) + 1;
+                });
+                loaded++;
+                if (loaded === slugs.length) render();
+            };
+            x.send();
         });
+
+        function render(){
+            nojsList.style.display = 'none';
+            grid.innerHTML = '';
+            findings.forEach(function(f){
+                if (!f) return;
+                var topkw = f.keywords.split(/\s+/).slice(0,3).join(' ');
+                var short = f.summary.length > 60 ? f.summary.substring(0,57)+'...' : f.summary;
+                var div = document.createElement('div');
+                div.className = 'card finding';
+                div.dataset.kw = f.keywords;
+                div.innerHTML = '<span class="num">'+f.num+'</span> <a href="/'+f.slug+'.html">'+f.title+'</a>'+short+'<br><span class="kw">'+topkw+'</span>';
+                grid.appendChild(div);
+            });
+            buildCloud();
+        }
+
+        // populate nojs fallback immediately from slugs
+        var lines = '';
+        slugs.forEach(function(slug, i){
+            var num = String(i+1).length < 2 ? '0'+(i+1) : String(i+1);
+            lines += '       <a href="/'+slug+'.html">'+num+'. '+slug+'</a>\n';
+        });
+        nojsList.innerHTML = lines;
     });
 
     function buildCloud(){
@@ -133,7 +162,6 @@ jnous.com
             return '<span style="font-size:'+size+'rem" onclick="document.getElementById(\'search\').value=\''+w+'\';document.getElementById(\'search\').dispatchEvent(new Event(\'input\'))">'+w+'</span>';
         }).join('');
     }
-    buildCloud();
 
     search.addEventListener('input', function(){
         var q = search.value.toLowerCase().trim();
@@ -141,6 +169,7 @@ jnous.com
             searches[q] = (searches[q]||0) + 1;
             localStorage.setItem('jnous-searches', JSON.stringify(searches));
         }
+        var cards = document.querySelectorAll('.finding');
         cards.forEach(function(c){
             if (!q) { c.classList.remove('hidden'); return; }
             var text = (c.textContent + ' ' + (c.dataset.kw||'')).toLowerCase();

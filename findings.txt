@@ -1,0 +1,17 @@
+three-questions
+delegation-vs-inline
+interaction-mode-variance
+authorization-gap
+governance-binding
+interaction-mode-rerun
+http2-vs-http1
+1bit-quantization
+1bit-hardware-tiers
+throughput-ceiling
+review-vs-verification
+lookdown-routing
+manifest-vs-bm25
+governance-refusal
+reflex-binding
+effort-dependent-binding
+handler-substrate-selection
