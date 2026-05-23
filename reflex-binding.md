@@ -36,4 +36,4 @@ THE DISTINCTION
        the user may or may not add.
 
 DATA
-       github.com/03-git/variance-lab findings/15-reflex-binding.txt
+       raw.githubusercontent.com/03-git/variance-lab/main/findings/15-reflex-binding.txt

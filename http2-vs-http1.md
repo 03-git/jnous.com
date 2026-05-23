@@ -31,4 +31,4 @@ WHY
        compute — it's the wire protocol blocking concurrent delivery.
 
 DATA
-       github.com/03-git/variance-lab findings/07-http2-vs-http1.txt
+       raw.githubusercontent.com/03-git/variance-lab/main/findings/07-http2-vs-http1.txt

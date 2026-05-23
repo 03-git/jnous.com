@@ -41,4 +41,4 @@ THREE-GATE METHOD
        Gate 2 caught what gate 3 missed.
 
 DATA
-       github.com/03-git/variance-lab findings/11-review-vs-verification.txt
+       raw.githubusercontent.com/03-git/variance-lab/main/findings/11-review-vs-verification.txt

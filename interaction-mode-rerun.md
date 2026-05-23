@@ -38,4 +38,4 @@ WHY IT WIDENED
        until the context window fills or the human returns.
 
 DATA
-       github.com/03-git/variance-lab findings/06-interaction-mode-rerun.txt
+       raw.githubusercontent.com/03-git/variance-lab/main/findings/06-interaction-mode-rerun.txt

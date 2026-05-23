@@ -37,4 +37,4 @@ THREE-GATE METHOD
        fixes that. Pick a different model.
 
 DATA
-       github.com/03-git/variance-lab findings/17-handler-substrate-selection.txt
+       raw.githubusercontent.com/03-git/variance-lab/main/findings/17-handler-substrate-selection.txt
