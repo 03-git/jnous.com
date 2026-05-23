@@ -3,161 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noai, noimageai">
-    <title>03 // Human</title>
-    <link rel="security" href="/.well-known/security.txt">
+    <title>jnous.com</title>
     <style>
         body {
-            background: #fffff8;
-            color: #111;
-            font-family: "Et-book", "Palatino", serif;
-            line-height: 1.6;
-            padding: 6vw 10vw;
-            margin: 0;
-            display: grid;
-            grid-template-columns: 1.3fr 3fr;
-            gap: 5rem;
-            max-width: 100vw;
-            overflow-x: hidden;
-        }
-
-        @media (max-width: 900px) {
-            body { grid-template-columns: 1fr; padding: 2rem; }
-            .side { text-align: left; }
-        }
-
-        header { grid-column: 1 / -1; border-bottom: 2px solid #111; margin-bottom: 4rem; padding-bottom: 1rem; }
-        h1 { font-size: 1.6rem; font-weight: normal; letter-spacing: 0.1rem; margin: 0; text-transform: uppercase; }
-        .subtitle { font-family: "JetBrains Mono", monospace; color: #b31b1b; font-size: 0.8rem; margin-top: 0.5rem; }
-
-        .side { font-size: 0.85rem; color: #555; text-align: right; line-height: 1.4; align-self: start; }
-        .margin-note { margin-bottom: 3rem; border-right: 2px solid #b31b1b; padding-right: 1.5rem; }
-        .margin-note b { font-family: "JetBrains Mono", monospace; color: #111; display: block; text-transform: uppercase; margin-bottom: 0.5rem; }
-
-        h2 { font-size: 1.3rem; font-weight: normal; font-style: italic; border-bottom: 1px solid #ddd; margin-top: 0; margin-bottom: 1.5rem; }
-        p { margin-bottom: 1.8rem; max-width: 40rem; font-size: 1.1rem; }
-
-        .sla-block { border: 1px solid #111; padding: 1.5rem; background: #fff; box-shadow: 5px 5px 0px #111; margin: 2rem 0; }
-        .sla-block h3 { margin-top: 0; font-family: "JetBrains Mono", monospace; font-size: 0.9rem; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; }
-        .sla-list { font-family: "JetBrains Mono", monospace; font-size: 0.85rem; list-style: none; padding: 0; }
-        .sla-list li { margin-bottom: 0.5rem; }
-        .sla-list li::before { content: "> "; color: #b31b1b; }
-
-        a { color: #b31b1b; text-decoration: none; border-bottom: 1px dotted #b31b1b; }
-        a:hover { border-bottom: 1px solid #b31b1b; }
-
-        #identity-anchor { margin-top: 4rem; padding-top: 2rem; border-top: 1px double #111; }
-        #identity-anchor h3 { font-family: "JetBrains Mono", monospace; font-size: 0.9rem; text-transform: uppercase; }
-
-        .hash-block {
-            font-family: "JetBrains Mono", monospace;
-            background: #eee;
-            padding: 0.75rem;
-            display: block;
-            font-size: 0.75rem;
-            margin: 1rem 0;
-            word-break: break-all;
-            color: #333;
-            border-left: 2px solid #ddd;
-        }
-
-        .fingerprint {
-            font-family: "JetBrains Mono", monospace;
-            background: #eee;
-            padding: 0.5rem 0.75rem;
-            display: inline-block;
-            font-size: 0.8rem;
-            margin: 1rem 0;
-            border-left: 2px solid #b31b1b;
-        }
-
-        .continuity-note {
-            font-family: "JetBrains Mono", monospace;
-            font-size: 0.7rem;
-            color: #777;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px dotted #ccc;
+            background: #111;
+            color: #c0c0c0;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 120ch;
+            padding: 0 1rem;
             line-height: 1.4;
         }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>JNOUS.COM</h1>
-        <div class="subtitle">03 // Human</div>
-    </header>
+<pre>
+title: jnous.com
+summary: Variance-lab findings. Empirical measurements of local LLM reliability, governance binding, and inference economics.
+url: https://jnous.com
+author: Josh (@hodorigami)
+license: GPLv2
+verify: ssh-keygen -Y verify -f authorized_signers -I hodori@subtract.ing -n subtract.ing -s llms.txt.sig &lt; llms.txt
 
-    <aside class="side">
-        <div class="margin-note">
-            <b>Ethos</b>
-            You do not build walls to keep the world out, but to define the space in which you can safely be infinite.
-        </div>
-        <div class="margin-note">
-            <b>The Mandate</b>
-            The modern social contract is a misshapen bargain. We exchange vitality for convenience. This is a breach of the natural order.
-        </div>
-        <div class="margin-note">
-            <b>Negative Education</b>
-            We reduce "Relevancy" to the algorithm. Existence regains Sovereignty being autonomous from it.
-        </div>
-        <div class="margin-note">
-            <b>Directives</b>
-            Necessity > Will.<br>
-            Infrastructure > Platform.<br>
-            Vitality > Metric.
-        </div>
-    </aside>
 
-    <main class="main">
-        <section>
-            <div class="sla-block">
-                <h3>Sovereignty-Level-Agreement</h3>
-                <ul class="sla-list">
-                    <li>Availability: Primary control remains human-authorized.</li>
-                    <li>Latency: Refutation of "Systemic Serfdom" lag.</li>
-                    <li>Security: SSH-Ed25519 hardware-bound signing.</li>
-                    <li>Provenance: Node ownership via technical necessity.</li>
-                </ul>
-            </div>
+JNOUS.COM
 
-            <p>[03 CONTENT PENDING]</p>
-        </section>
+NAME
+       jnous - variance-lab findings from empirical local LLM measurement
 
-        <section id="identity-anchor">
-            <h3>Identity Sovereignty Audit</h3>
-            <p>[03 CONTENT PENDING]</p>
+DESCRIPTION
+       17 findings from 105,000+ inferences across 28 models. Each finding states
+       what was tested, what was measured, and what the data showed. No theory
+       without data. No data without method.
 
-            <b>Sovereign Source (Repository):</b><br>
-            <div class="hash-block">
-                <a href="https://github.com/03-git/jnous.com" target="_blank">github.com/03-git/jnous.com</a>
-            </div>
+FINDINGS
 
-            <b>SSH Signing Fingerprint (SHA256):</b><br>
-            <div class="fingerprint">SHA256:Aw1QLLpzaCc7ycWKwLBsG/2rfWagcs2OjBFdh6SA0s4</div>
+       <a href="/three-questions.md">01. Three Questions for Agentic Autonomy</a>
+           Universal intake: human boundary, autonomy blockers, subtractive access.
 
-            <br><b>Cross-Verification via subtract.ing:</b><br>
-            <div class="continuity-note">
-                The fingerprint above is the key that signs the machine-readable manifest at
-                <a href="https://subtract.ing/llms.txt">subtract.ing/llms.txt</a>.
-                Verify the chain yourself:<br><br>
-                <code>
-                curl -sO https://subtract.ing/authorized_signers<br>
-                curl -sO https://subtract.ing/llms.txt.sig<br>
-                curl -s https://subtract.ing/llms.txt | ssh-keygen -Y verify \<br>
-                &nbsp;&nbsp;-f authorized_signers -I hodori@subtract.ing -n subtract.ing -s llms.txt.sig
-                </code><br><br>
-                Good signature &rarr; this site's identity is the same identity that signs the subtract substrate.
-            </div>
+       <a href="/delegation-vs-inline.md">02. Delegation vs Inline Execution</a>
+           Delegated parallel: 48% wall clock of single-context. No context contamination.
 
-            <br><b>Public Sovereignty Root (Ed25519):</b><br>
-            <div class="hash-block">ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDR/wryTGN58e/WSxZ19joaUew+3TfsaM9siMOn3+qaJ</div>
+       <a href="/interaction-mode-variance.md">03. Interaction Mode Variance</a>
+           Passenger mode: 41x tokens vs governor mode. 88 sessions, single operator.
 
-            <div class="continuity-note">
-                SLA/Continuity Integration:<br><br>
-                [03 SLA PENDING]
-            </div>
-        </section>
-    </main>
+       <a href="/authorization-gap.md">04. Delegated Agent Authorization Gap</a>
+           Agents fail at auth boundaries, not capability boundaries.
+
+       <a href="/governance-binding.md">05. Governance Binding</a>
+           Governance binds at N=30: 81% overall. Reflex-dependent. Delivery-path sensitive.
+
+       <a href="/interaction-mode-rerun.md">06. Interaction Mode Rerun</a>
+           52.7x passenger/governor under pre-committed rubric. N=501 qualifying sessions.
+
+       <a href="/http2-vs-http1.md">07. HTTP/2 vs HTTP/1.1</a>
+           HTTP/2 multiplexing: 2.1x throughput for local inference concurrency.
+
+       <a href="/1bit-quantization.md">08. 1-Bit Quantization</a>
+           1-bit breaks the 8GB deployment ceiling. Bonsai 8B on 8GB M2 Mini.
+
+       <a href="/1bit-hardware-tiers.md">09. 1-Bit Across Hardware Tiers</a>
+           1-bit wins across 4 tiers. The bottleneck differs per tier.
+
+       <a href="/throughput-ceiling.md">10. Throughput Ceiling</a>
+           Aggregate inference plateaus at a hardware-determined ceiling.
+
+       <a href="/review-vs-verification.md">11. Review vs Verification</a>
+           Cheaper model finds crash path expensive model misses.
+
+       <a href="/lookdown-routing.md">12. Lookdown Routing</a>
+           grep beats inference for known-answer retrieval.
+
+       <a href="/manifest-vs-bm25.md">13. Manifest vs BM25</a>
+           Manifest-routed retrieval beats BM25 for small-corpus QA.
+
+       <a href="/governance-refusal.md">14. Governance Refusal</a>
+           In-vivo reproduction of finding 5 during scorer calibration.
+
+       <a href="/reflex-binding.md">15. Reflex Binding</a>
+           Abstract reflexes transfer only with lineage, not instruction.
+
+       <a href="/effort-dependent-binding.md">16. Effort-Dependent Binding</a>
+           Governance binding varies by effort tier. 4 models, 1872 trials.
+
+       <a href="/handler-substrate-selection.md">17. Handler Substrate Selection</a>
+           Three-gate methodology for substrate-code model selection.
+
+DATA
+       Raw data: <a href="https://github.com/03-git/variance-lab">github.com/03-git/variance-lab</a>
+       Substrate: <a href="https://subtract.ing">subtract.ing</a>
+
+jnous.com                                                                                    jnous.com
+</pre>
 </body>
 </html>

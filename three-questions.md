@@ -1,0 +1,56 @@
+title: Three Questions for Agentic Autonomy
+summary: Universal intake sequence. Human capability boundary first, autonomy blockers second, subtractive access third. The sequence matters.
+date: 2026-03-28
+url: https://jnous.com/three-questions.md
+source: production empirical (consulting methodology derived from formation buildout)
+license: GPLv2
+
+
+THREE QUESTIONS FOR AGENTIC AUTONOMY
+
+1. What can you do that an agent cannot?
+2. What prevents the workflow from being autonomous?
+3. What should the agent have access to?
+
+The answers are domain-specific. The questions are universal.
+
+WHY THE SEQUENCE MATTERS
+
+       Question 1 starts from the human, not the technology. It surfaces
+       tacit knowledge, judgment under ambiguity, relational capital —
+       capabilities that a technology-first scan never surfaces because
+       they don't map to automatable task categories.
+
+       Question 2 assumes the agent is capable and asks what environmental
+       barriers remain. Most blockers are infrastructure problems (auth
+       gates, GUI-only interfaces, missing APIs), not capability problems.
+
+       Question 3 after 1 and 2 produces subtractive security: the agent
+       gets only what the blocker analysis says it needs. Reversing the
+       order leads to additive security — broad access with layered
+       restrictions.
+
+PRIOR ART
+
+       Every major framework starts from one of three places:
+
+       Technology-first    Brynjolfsson & Mitchell (2017), McKinsey (2017)
+                           Human capability is the residual, not the start.
+
+       Process-first       Wilson & Daugherty/Accenture (2018), RPA feasibility
+                           Process is the unit, not the blocker.
+
+       ROI-first           Gartner hyperautomation (2020-2024), Big 4
+                           Scoring automation candidates, not enumerating blockers.
+
+       No published framework combines: human capability as start, blocker
+       as unit, infrastructure vs capability as first-class distinction,
+       per-workflow decomposition, and access derived from blocker analysis.
+
+EMPIRICAL
+
+       Instruction-based constraints: $0.30-0.55/call, bypassable.
+       Capability subtraction (derived from question 3): $0.02/call, no bypass.
+
+DATA
+       github.com/03-git/variance-lab findings/01-three-questions.txt

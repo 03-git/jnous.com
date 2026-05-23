@@ -1,0 +1,38 @@
+title: 1-Bit Across Hardware Tiers
+summary: 1-bit wins across 4 hardware tiers because the bottleneck differs per tier. 8GB is memory-bound. 64GB is compute-bound. 1-bit addresses both.
+date: 2026-04-25
+url: https://jnous.com/1bit-hardware-tiers.md
+source: production empirical (4 hardware tiers, same model, same harness)
+license: GPLv2
+
+
+1-BIT ACROSS HARDWARE TIERS
+
+RESULT
+
+       Same model, same harness, four machines:
+
+       8GB M2 Mini       1-bit loads. Q4/Q8 do not. Memory-bound.
+       16GB              1-bit faster. Q4 loads but slower. Memory-bound.
+       32GB              1-bit and Q4 comparable. Transition zone.
+       64GB M1 Max       1-bit still faster on throughput. Compute-bound.
+
+       The reason 1-bit wins changes by tier. On small machines,
+       it wins because the model fits. On large machines, it wins
+       because fewer bits move through the memory bus per token.
+
+WHY THE BOTTLENECK SHIFTS
+
+       At 8GB, the constraint is "can the model load at all."
+       1-bit is the only option that clears the gate.
+
+       At 64GB, every quantization loads. The constraint shifts to
+       memory bandwidth — how fast weights move from RAM to compute.
+       1-bit moves fewer bits per parameter. The bus clears faster.
+       Throughput increases even though quality decreases.
+
+       A single quantization strategy is wrong for all tiers.
+       The right choice depends on which resource is scarce.
+
+DATA
+       github.com/03-git/variance-lab findings/09-1bit-hardware-tiers.txt

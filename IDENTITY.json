@@ -1,9 +1,0 @@
-{
-  "node": "03",
-  "current": {
-    "alg": "ssh-ed25519",
-    "fp": "SHA256:Aw1QLLpzaCc7ycWKwLBsG/2rfWagcs2OjBFdh6SA0s4",
-    "status": "active",
-    "activated": "2026-03-26"
-  }
-}
