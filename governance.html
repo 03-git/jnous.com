@@ -3,243 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noai, noimageai">
-    <title>governance | subtract.ing</title>
+    <title>governance</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #111;
-            color: #d0d0d0;
-            font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
-            line-height: 1.7;
+            color: #c0c0c0;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 120ch;
+            padding: 0 1rem;
+            line-height: 1.4;
         }
-
-        nav {
-            padding: 1.5rem 2rem;
-            font-size: 0.85rem;
-        }
-        nav a { color: #555; text-decoration: none; }
-        nav a:hover { color: #8be9fd; }
-
-        .content {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 2rem 2rem 6rem;
-        }
-
-        h1 {
-            font-size: clamp(1.4rem, 4vw, 2rem);
-            font-weight: 300;
-            color: #e0e0e0;
-            margin-bottom: 1rem;
-        }
-
-        .epigraph {
-            font-size: 0.95rem;
-            color: #888;
-            border-left: 2px solid #333;
-            padding-left: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        h2 {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #e0e0e0;
-            margin: 2.5rem 0 1rem;
-        }
-
-        p {
-            font-size: 0.9rem;
-            color: #999;
-            margin-bottom: 1rem;
-        }
-
-        strong { color: #d0d0d0; }
-        code { color: #8be9fd; font-family: "SF Mono", monospace; font-size: 0.85em; background: #1a1a1a; padding: 0.15em 0.3em; border-radius: 3px; }
-
-        .diagram {
-            background: #1a1a1a;
-            border: 1px solid #2a2a2a;
-            border-radius: 8px;
-            padding: 1.5rem;
-            font-family: "SF Mono", "Cascadia Code", monospace;
-            font-size: 0.8rem;
-            line-height: 1.6;
-            margin: 1.5rem 0;
-            color: #999;
-        }
-        .diagram .label { color: #8be9fd; }
-        .diagram .action { color: #50fa7b; }
-
-        ul {
-            margin: 1rem 0;
-            padding-left: 1.5rem;
-        }
-        li {
-            font-size: 0.9rem;
-            color: #999;
-            margin-bottom: 0.5rem;
-        }
-
-        .callout {
-            background: #1a1a1a;
-            border-left: 3px solid #50fa7b;
-            padding: 1rem 1.2rem;
-            margin: 1.5rem 0;
-            font-size: 0.88rem;
-        }
-
-        .table-wrap {
-            overflow-x: auto;
-            margin: 1.5rem 0;
-        }
-        table {
-            border-collapse: collapse;
-            font-size: 0.85rem;
-            width: 100%;
-        }
-        th, td {
-            text-align: left;
-            padding: 0.6rem 1rem;
-            border-bottom: 1px solid #2a2a2a;
-        }
-        th { color: #888; font-weight: 500; }
-        td { color: #999; }
-
-        hr {
-            border: none;
-            border-top: 1px solid #2a2a2a;
-            margin: 3rem 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            font-family: "SF Mono", monospace;
-            font-size: 0.7rem;
-            color: #333;
-        }
-        footer a { color: #444; text-decoration: none; }
-        footer a:hover { color: #8be9fd; }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
     </style>
 </head>
 <body>
+<pre>
+title: Governance
+summary: Manifest signing with ssh-keygen -Y. Reflexes, authority, drift detection. The agent prepares, the human signs.
+url: <a href="https://jnous.com/governance.html">https://jnous.com/governance.html</a>
+license: GPLv2
+keywords: governance signing ssh-keygen manifest drift confabulation reflexes authority subtract
 
-<nav><a href="/">&larr; subtract.ing</a></nav>
 
-<div class="content">
+GOVERNANCE
 
-<h1>Governance</h1>
+       The agent reads, reasons, prepares. You sign.
+       The boundary is cryptographic.
 
-<p class="epigraph">The agent reads, reasons, prepares. You sign. The boundary is cryptographic.</p>
+REFLEXES
 
-<h2>Reflexes</h2>
+       Before acting on this system:
 
-<p>Before acting on this system:</p>
-<ul>
-<li><strong>Python → Kernel:</strong> Name the kernel primitive before proposing any library.</li>
-<li><strong>Memory → Signature:</strong> Ask if <code>ssh-keygen -Y sign</code> can verify the format before inventing one.</li>
-<li><strong>Sandboxing → Kernel:</strong> Name the primitive (<code>namespaces</code>, <code>cgroups</code>) before proposing a wrapper.</li>
-<li><strong>Action → Verification:</strong> If unsigned, verify with a live read before acting.</li>
-</ul>
-<p>Gates, not guidelines. Cannot answer? Do not proceed.</p>
+       Python to Kernel      Name the kernel primitive before proposing
+                             any library.
 
-<h2>The problem</h2>
+       Memory to Signature   Ask if ssh-keygen -Y sign can verify the
+                             format before inventing one.
 
-<p>AI agents modify your system. They edit files, run commands, change state. Without governance, you have no way to know:</p>
+       Sandboxing to Kernel  Name the primitive (namespaces, cgroups)
+                             before proposing a wrapper.
 
-<ul>
-<li>What changed since you last looked</li>
-<li>Whether a prior session introduced drift you didn't authorize</li>
-<li>Whether the current state reflects your decisions or a confused agent's guesses</li>
-</ul>
+       Action to Verification
+                             If unsigned, verify with a live read
+                             before acting.
 
-<p>The failure mode is <strong>confabulation cascade</strong>: a session "corrects" something incorrectly, the wrong state persists, the next session treats it as truth, and you spend hours clawing back ground that was already held.</p>
+       Gates, not guidelines. Cannot answer? Do not proceed.
 
-<h2>The solution</h2>
+THE PROBLEM
 
-<p>A manifest of file hashes, signed with your Ed25519 key. Two scripts. No daemon, no service, no database.</p>
+       AI agents modify your system. They edit files, run commands,
+       change state. Without governance, you have no way to know:
 
-<div class="diagram">
-<span class="label">boot.sh</span>                          <span class="label">exit.sh</span>
-   │                                │
-   ├─ <span class="action">what changed?</span>                 ├─ <span class="action">update manifest</span>
-   ├─ <span class="action">is it signed?</span>                 └─ <span class="action">sign</span>
-   └─ <span class="action">surface drift</span>
-</div>
+       - What changed since you last looked
+       - Whether a prior session introduced drift you didn't authorize
+       - Whether the current state reflects your decisions or a
+         confused agent's guesses
 
-<p>At session start, <code>boot.sh</code> verifies the manifest signature, computes current hashes, and surfaces any drift. At session end, <code>exit.sh</code> updates the manifest with current state and signs it.</p>
+       The failure mode is confabulation cascade: a session "corrects"
+       something incorrectly, the wrong state persists, the next
+       session treats it as truth, and you spend hours clawing back
+       ground that was already held.
 
-<h2>The primitive</h2>
+THE SOLUTION
 
-<p><code>ssh-keygen -Y sign</code> and <code>ssh-keygen -Y verify</code>, shipped with OpenSSH since 2019. Every Unix system has it. No blockchain, no certificate authority, no cloud service.</p>
+       A manifest of file hashes, signed with your Ed25519 key.
+       Two scripts. No daemon, no service, no database.
 
-<div class="callout">
-<p><strong>Unsigned drift</strong> = changes you didn't authorize</p>
-<p><strong>Signature</strong> = Ed25519 attestation that you reviewed and approved</p>
-</div>
+       boot.sh                          exit.sh
+          |                                |
+          +-- what changed?                +-- update manifest
+          +-- is it signed?                +-- sign
+          +-- surface drift
 
-<h2>Who signs</h2>
+       At session start, boot.sh verifies the manifest signature,
+       computes current hashes, and surfaces any drift. At session
+       end, exit.sh updates the manifest with current state and
+       signs it.
 
-<p><strong>You sign alone.</strong> The signing identity is a single Ed25519 key you control. Agents verify but never sign for authority. Trust paths should be predictable: one identity, one head to audit.</p>
+THE PRIMITIVE
 
-<p>The public half of your key lives in <code>~/.ssh/authorized_signers</code>. This is the trust set verification checks against.</p>
+       ssh-keygen -Y sign and ssh-keygen -Y verify, shipped with
+       OpenSSH since 2019. Every Unix system has it. No blockchain,
+       no certificate authority, no cloud service.
 
-<h2>What gets signed</h2>
+       Unsigned drift = changes you didn't authorize
+       Signature      = Ed25519 attestation that you reviewed and approved
 
-<p>A single manifest file containing one line per governed file: the sha256 hash and the path.</p>
+WHO SIGNS
 
-<pre class="diagram">
-sha256:a1b2c3...  config/settings.json
-sha256:d4e5f6...  scripts/handler.sh
-sha256:g7h8i9...  memory/lookup.tsv
-signed-at: 2026-04-11T14:00:00Z
+       You sign alone. The signing identity is a single Ed25519 key
+       you control. Agents verify but never sign for authority. Trust
+       paths should be predictable: one identity, one head to audit.
+
+       The public half of your key lives in ~/.ssh/authorized_signers.
+       This is the trust set verification checks against.
+
+WHAT GETS SIGNED
+
+       A single manifest file containing one line per governed file:
+       the sha256 hash and the path.
+
+       sha256:a1b2c3...  config/settings.json
+       sha256:d4e5f6...  scripts/handler.sh
+       sha256:g7h8i9...  memory/lookdown.tsv
+       signed-at: 2026-04-11T14:00:00Z
+
+       The manifest itself is signed once. Verification is one
+       signature check plus N hash checks.
+
+THE BOOTSTRAP
+
+       The signing tools sign themselves. boot.sh and exit.sh are
+       both included in the manifest. A session that rewrites either
+       script to skip checks produces a script whose hash no longer
+       matches. The next boot catches the mismatch.
+
+       The chain of trust:
+
+       1. boot.sh verifies the manifest signature
+       2. boot.sh verifies its own hash against the manifest
+       3. boot.sh verifies exit.sh's hash against the manifest
+       4. Only then does boot.sh verify the governed files
+
+       A confabulating session that wants to subvert this would have
+       to forge your private key. The architecture cannot defend
+       against a compromised root. Nothing can.
+
+WHAT THIS ENABLES
+
+       Confabulation cannot persist. A session without your private
+       key cannot produce a valid signature. Wrong corrections don't
+       survive.
+
+       Day-forward gains stick. What you sign at session end persists
+       as verified state into the next session.
+
+       History is auditable. Each signoff produces a dated manifest.
+       Your whole trajectory becomes a sequence of signed snapshots.
+
+WHAT THIS DOES NOT SOLVE
+
+       In-session confabulation. A session can still confabulate
+       during runtime. The architecture only prevents persistence.
+
+       Compromised key. If your private key is exfiltrated, the
+       attacker can sign anything. Physical security and key rotation
+       are the mitigations.
+
+       The kernel has had this since 2019. subtract just calls it.
+
+SEE ALSO
+       <a href="/discipline.html">discipline</a> -- human is the loop
+       <a href="/signing.html">signing</a> -- the primitive in detail
+       <a href="/substrate.html">substrate</a> -- what the kernel already ships
+
+jnous.com                        2026-05-24                      JNOUS(7)
 </pre>
-
-<p>The manifest itself is signed once. Verification is one signature check plus N hash checks.</p>
-
-<h2>The bootstrap</h2>
-
-<p>The signing tools sign themselves. <code>boot.sh</code> and <code>exit.sh</code> are both included in the manifest. A session that rewrites either script to skip checks produces a script whose hash no longer matches. The next boot catches the mismatch.</p>
-
-<p>The chain of trust:</p>
-
-<ul>
-<li><code>boot.sh</code> verifies the manifest signature</li>
-<li><code>boot.sh</code> verifies its own hash against the manifest</li>
-<li><code>boot.sh</code> verifies <code>exit.sh</code>'s hash against the manifest</li>
-<li>Only then does <code>boot.sh</code> verify the governed files</li>
-</ul>
-
-<p>A confabulating session that wants to subvert this would have to forge your private key. The architecture cannot defend against a compromised root. Nothing can.</p>
-
-<h2>What this enables</h2>
-
-<ul>
-<li><strong>Confabulation cannot persist.</strong> A session without your private key cannot produce a valid signature. Wrong corrections don't survive.</li>
-<li><strong>Day-forward gains stick.</strong> What you sign at session end persists as verified state into the next session.</li>
-<li><strong>History is auditable.</strong> Each signoff produces a dated manifest. Your whole trajectory becomes a sequence of signed snapshots.</li>
-</ul>
-
-<h2>What this does not solve</h2>
-
-<ul>
-<li><strong>In-session confabulation.</strong> A session can still confabulate during runtime. The architecture only prevents persistence.</li>
-<li><strong>Compromised key.</strong> If your private key is exfiltrated, the attacker can sign anything. Physical security and key rotation are the mitigations.</li>
-</ul>
-
-<hr>
-
-<p>The kernel has had this since 2019. subtract just calls it.</p>
-
-<p>Next: <a href="/discipline" style="color: #8be9fd;">Human is the Loop</a></p>
-
-</div>
-
-<footer>
-    <a href="/">subtract.ing</a> &middot; <a href="/paste">paste</a> &middot; <a href="/why">why</a> &middot; <a href="/lineage">lineage</a> &middot; <a href="/substrate">substrate</a> &middot; <a href="/signing">signing</a> &middot; <a href="/time">time</a> &middot; <a href="/governance">governance</a> &middot; <a href="/discipline">discipline</a> &middot; <a href="https://github.com/03-git/subtract">github</a>
-</footer>
-
 </body>
 </html>

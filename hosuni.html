@@ -29,10 +29,10 @@ keywords: hosuni dispatcher shell routing intent inference Amiga 68000 subtract
 
 # hosuni — tool-use daemon for local inference
 
-A compiled Rust daemon that gives local models hands. Receives
-input from any interface, routes inference through squared, parses
-completions for tool calls, executes them, feeds results back.
-One binary, any node.
+A shell daemon that gives local models hands. Receives input
+from any interface, routes inference through parsimony or
+llama-server, parses completions for tool calls, executes them,
+feeds results back. Pure bash + jq, any node.
 
 Named for the 1988 Seoul Olympics mascot pair. Hodori is the
 governor. Hosuni is the daemon that acts on his behalf.
@@ -55,19 +55,19 @@ A persistent process that:
 ## What it is not
 
   - Not a chatbot. A daemon that executes.
-  - Not model-specific. Talks to squared's socket; whatever model
-    is behind it is interchangeable.
-  - Not platform-specific. Compiles to a static binary. Runs on
-    Mac, Linux, Pi.
+  - Not model-specific. Talks to llama-server or parsimony pipes;
+    whatever model is behind it is interchangeable.
+  - Not platform-specific. Runs on Mac, Linux, Pi.
 
 ## Architecture
 
   shell (subtract.sh, handler.sh)     user-facing, orchestration
-  rust daemon (hosuni)                 inference routing, tool execution, state
-  c proxy (squared)                    network, multiplexing, TLS
-  llama-server                         inference
+  shell daemon (hosuni.sh)            inference routing, tool execution, state
+  c filter (parsimony.c)              coproc inference, stdin/stdout JSONL
+  c proxy (squared.c)                 network, multiplexing, TLS
+  llama-server                        inference
 
-Each layer is a compiled binary or a shell script. No interpreters
+Each layer is a C binary or a shell script. No interpreters
 on the deploy path.
 
 ## Interfaces (ears)
@@ -153,19 +153,11 @@ Every interaction logged in two places:
 
 ## Build and deploy
 
-  Build:    cargo build --release (on rousseau)
-  Output:   target/release/hosuni (single static binary)
-  Deploy:   scp hosuni {node}:~/.subtract/bin/hosuni
-  Run:      ~/.subtract/bin/hosuni
+  Deploy:   scp hosuni.sh {node}:~/.subtract/bin/hosuni.sh
+  Run:      ~/.subtract/bin/hosuni.sh
   Service:  launchd plist (Mac) or systemd unit (Linux)
 
-Build-time dependencies (cargo crates, on rousseau only):
-  tokio       async runtime (sleep on file descriptors)
-  serde       JSON parsing (inference API, Discord Gateway)
-  serde_json  JSON serialization
-  tungstenite Discord WebSocket (or tokio-tungstenite)
-
-Runtime dependencies: none. The binary and the kernel.
+Runtime dependencies: bash, jq, curl, nc. All ship with the OS.
 
 ## Configuration
 

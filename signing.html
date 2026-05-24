@@ -22,7 +22,7 @@
 <body>
 <pre>
 title: signing
-summary: signing
+summary: ssh-keygen -Y sign and verify. The trust primitive subtract uses. Shipped with OpenSSH since 2019.
 url: <a href="https://jnous.com/signing.html">https://jnous.com/signing.html</a>
 license: GPLv2
 keywords: signing subtract
@@ -69,38 +69,12 @@ Good "namespace" signature for signer with ED25519 key SHA256:...
 
     The parallel
 
-    
-        
-            
-            Entry
-            Trust
-        
-        
-            Primitive
-            command_not_found_handle
-            ssh-keygen -Y
-        
-        
-            Shipped
-            Bash 4.0, 2009
-            OpenSSH 8.0, 2019
-        
-        
-            Intended use
-            Error handling hook
-            Git commit signing
-        
-        
-            subtract use
-            Translation entry point
-            Agent governance layer
-        
-        
-            Awareness
-            Low
-            Lower
-        
-    
+                          Entry                        Trust
+    Primitive             command_not_found_handle      ssh-keygen -Y
+    Shipped               Bash 4.0, 2009               OpenSSH 8.0, 2019
+    Intended use          Error handling hook           Git commit signing
+    subtract use          Translation entry point       Agent governance layer
+    Awareness             Low                          Lower
 
     
         Same archaeological pattern: the kernel (or core userland) already ships the primitive.
@@ -167,14 +141,14 @@ Good "namespace" signature for signer with ED25519 key SHA256:...
         
         
 # Sign your lookup table
-$ ssh-keygen -Y sign -f ~/.ssh/id_ed25519 -n subtract &lt; ~/.subtract/lookup.tsv &gt; lookup.tsv.sig
+$ ssh-keygen -Y sign -f ~/.ssh/id_ed25519 -n subtract &lt; ~/.subtract/lookdown.tsv &gt; lookdown.tsv.sig
 
 # Share both files. Recipient adds your public key to their authorized_signers:
 # ~/.ssh/authorized_signers (one line per trusted signer)
 colleague ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI...
 
 # Then verifies:
-$ ssh-keygen -Y verify -f ~/.ssh/authorized_signers -I colleague -n subtract -s lookup.tsv.sig &lt; lookup.tsv
+$ ssh-keygen -Y verify -f ~/.ssh/authorized_signers -I colleague -n subtract -s lookdown.tsv.sig &lt; lookdown.tsv
 Good "subtract" signature for colleague with ED25519 key SHA256:...
         
     
