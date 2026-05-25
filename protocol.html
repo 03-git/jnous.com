@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>protocol</title>
+    <style>
+        body {
+            background: #111;
+            color: #c0c0c0;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 120ch;
+            padding: 0 1rem;
+            line-height: 1.4;
+        }
+        pre { white-space: pre-wrap; margin: 0; }
+        a { color: #8be9fd; }
+        a:visited { color: #bd93f9; }
+    </style>
+</head>
+<body>
+<pre>
+title: Protocol
+summary: Sovereignty identity stack. Identity = hardware-bound cryptographic signature verified by deterministic DNS pulse. SSH-Ed25519.
+url: <a href="https://jnous.com/protocol.html">https://jnous.com/protocol.html</a>
+license: GPLv2
+keywords: protocol identity sovereignty ssh ed25519 dns signing validation registrar subtract
+
+# protocol — sovereignty identity stack
+
+Identity = hardware-bound cryptographic signature.
+Verified by deterministic DNS pulse.
+
+
+## DNS Schema
+
+  _identity TXT:
+
+  v=1.5; epoch=[int]; status=[active|revoked];
+  alg=ssh-ed25519; fp=SHA256:[hash];
+  activated=[date]; prev=[hash]
+
+  Rules:
+    Order irrelevant; verifiers parse map.
+    Precedence: DNS > IDENTITY.json.
+    Rollback: require new_epoch >= last_seen_epoch.
+
+
+## Validation
+
+  Valid IFF:
+
+    1. status=active (no resolve = invalid)
+    2. DNS fp == Git commit fp
+    3. Ed25519 signature valid
+
+
+## Dependencies
+
+  Registrar = physical trust root.
+  Loss = identity death.
+
+  Time: Git timestamps advisory.
+  DNS activated = logical root.
+
+
+## Axiom
+
+  Infrastructure > Platform.
+
+jnous.com                        2026-05-25                      JNOUS(7)
+</pre>
+</body>
+</html>
