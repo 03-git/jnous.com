@@ -22,183 +22,226 @@
 <body>
 <pre>
 title: Hosuni
-summary: Shell dispatcher. Routes intent through subtract, lookdown, and inference. 68000-architecture.
+summary: Shell daemon. Receives JSON on stdin, checks lookdown, enriches context, routes inference through parsimony pipes or curl, executes tool calls, returns {response, source}.
 url: <a href="https://jnous.com/hosuni.html">https://jnous.com/hosuni.html</a>
 license: GPLv2
-keywords: hosuni dispatcher shell routing intent inference Amiga 68000 subtract
+keywords: hosuni daemon shell routing inference lookdown parsimony tool-use subtract
 
 # hosuni — tool-use daemon for local inference
 
-A shell daemon that gives local models hands. Receives input
-from any interface, routes inference through parsimony or
-llama-server, parses completions for tool calls, executes them,
-feeds results back. Pure bash + jq, any node.
+A shell daemon that gives local models hands. Receives JSON on
+stdin, checks lookdown, enriches context (YouTube transcripts,
+web search), routes inference through parsimony named pipes or
+curl to llama-server, parses completions for tool calls,
+executes them, feeds results back. Pure bash + jq, any node.
 
 Named for the 1988 Seoul Olympics mascot pair. Hodori is the
 governor. Hosuni is the daemon that acts on his behalf.
 
 ## What it is
 
-A persistent process that:
+A process that:
 
-  1. Sleeps on file descriptors (Discord WebSocket, local port)
-  2. Wakes when input arrives
-  3. Checks lookdown (personal first, universal fallback)
-  4. If no match, routes to inference through squared
-  5. Parses the completion for tool calls
-  6. Executes the tool (read file, run command, osascript, etc.)
-  7. Appends the result to the conversation
-  8. Sends the next turn to inference
-  9. Returns the final response through the interface it came from
-  10. Logs the session, goes back to sleep
+  1. Reads a JSON request from stdin
+  2. Checks lookdown (node-specific first, universal fallback)
+  3. If match: eval the result, return, log, done
+  4. Enriches context if input contains YouTube URLs or
+     search triggers (transcript/results fetched before
+     inference, no model decision)
+  5. If enriched: route to research model (Gemma on 8087)
+  6. If not enriched: route to primary model via parsimony
+     pipes or curl to llama-server
+  7. Parses the completion for tool calls
+  8. Executes the tool (read file, run command, osascript, etc.)
+  9. Appends the result to the conversation
+  10. Sends the next turn to inference (up to 5 rounds)
+  11. Returns {response, source} as JSON on stdout
+  12. Logs the session
 
 ## What it is not
 
   - Not a chatbot. A daemon that executes.
-  - Not model-specific. Talks to llama-server or parsimony pipes;
-    whatever model is behind it is interchangeable.
+  - Not model-specific. Talks to parsimony pipes or any
+    llama-server; the model behind it is interchangeable.
   - Not platform-specific. Runs on Mac, Linux, Pi.
+  - Not a listener. Reads stdin, writes stdout. The listener
+    (Discord bot, nc, cron) spawns hosuni per request.
 
 ## Architecture
 
   shell (subtract.sh, handler.sh)     user-facing, orchestration
   shell daemon (hosuni.sh)            inference routing, tool execution, state
   c filter (parsimony.c)              coproc inference, stdin/stdout JSONL
-  c proxy (squared.c)                 network, multiplexing, TLS
-  llama-server                        inference
+  llama-server                        inference (primary on 8085, research on 8087)
 
-Each layer is a C binary or a shell script. No interpreters
-on the deploy path.
+Each layer is a C binary or a shell script.
 
-## Interfaces (ears)
+## Three inference paths
 
-  Discord WebSocket     DM and channel messages, whitelist-gated
-  Local port            for terminal, scripts, cron, other daemons
+  parsimony pipes    ~/.subtract/.parsimony.{in,out}
+                     Named pipes to parsimony.c coproc. Lock-
+                     guarded (.parsimony.lock). Fastest path.
+                     --prelude-file loads SOUL.txt at exec time
+                     (binding-by-process-identity: below the
+                     JSON parser, below orchestration).
 
-Each interface is a listener that feeds input to the same core.
-Adding an interface does not change the core. Removing one does
-not break the others.
+  curl to llama-server
+                     Fallback when pipes are absent. POST to
+                     http://{host}:{port}/v1/chat/completions.
+                     OpenAI-compatible.
 
-## Core loop
+  research model     Enriched-context path. When YouTube
+                     transcripts or web search results are
+                     present, routes to research port (8087,
+                     typically Gemma 26B) instead of the
+                     primary 7B. 20-second timeout with
+                     watchdog; falls back to primary if
+                     research is slow or empty.
 
-  input arrives on any interface
-    → check lookdown.personal.tsv (T0, instant)
-    → check lookdown.tsv (T0, instant)
-    → if match: return, log, done
-    → build messages array (conversation state for this channel)
-    → POST to squared endpoint (local inference)
-    → read completion
-    → if completion contains tool call:
-        → execute tool
-        → append result to messages
-        → POST again (multi-turn)
-        → repeat until no tool call
-    → if local returns empty: fallback to claude -p -c
-    → return response through originating interface
-    → log session
+## Three governance layers
+
+  adapter            LoRA weights. Provides behavioral
+                     disposition (~50% binding floor).
+
+  SOUL.txt           System message loaded from
+                     ~/.subtract/SOUL.txt. Injected as first
+                     message on first turn. Provides
+                     compliance (~97% with adapter).
+
+  --prelude-file     Loaded by parsimony at exec time.
+                     Prepended to every chat template inside
+                     the coprocessor. Cannot be stripped by
+                     interaction, prompt injection, or context
+                     eviction. The hardness layer.
+
+## Output format
+
+  Every response is JSON on stdout:
+
+    {"response": "...", "source": "lookdown|local|research"}
+
+  source tells you which path answered:
+    lookdown   — grep matched, no inference
+    local      — primary model (parsimony or llama-server)
+    research   — enriched context routed to research model
+
+## Lookdown
+
+  T0 check before any inference. Two files, node-specific first:
+
+    ~/.subtract/lookdown.$(hostname).tsv
+    ~/.subtract/lookdown.universal.tsv
+
+  Format: pattern&lt;TAB&gt;command&lt;TAB&gt;[args]
+
+  Glob matching against lowercased input. If matched, the
+  command field is eval'd. Inputs over 120 characters skip
+  lookdown (too long for pattern match, routed to inference).
+
+## Pre-inference context enrichment
+
+  Before the model sees the input, hosuni checks for:
+
+  YouTube URLs       Extracts video IDs, fetches transcripts
+                     via yt-transcript, prepends to context
+                     (up to 16384 chars per video).
+
+  Search triggers    "search for ...", "latest on ...",
+                     "current status of ...", "latest news ..."
+                     Runs web_search tool from tools.tsv,
+                     prepends results to context (up to 4096
+                     chars).
+
+  If either fires, the enriched context routes to the research
+  model instead of the primary. The model receives grounded
+  context, not a bare question.
 
 ## Tool definitions
-
-A file the daemon reads at startup. Not compiled in.
 
   ~/.hosuni/tools.tsv
 
   Format: name&lt;TAB&gt;description&lt;TAB&gt;command_template
 
-  read_file     Read a file             cat {path}
-  write_file    Write to a file         tee {path}
-  list_dir      List directory          ls -la {path}
-  run_command   Run a shell command     sh -c {command}
-  osascript     Run AppleScript         osascript -e {script}
+  The daemon checks command -v on the first word of each
+  template at load time. Tools whose binary doesn't exist
+  on this node are silently omitted — osascript on Mac,
+  absent on Linux.
 
-osascript is present on Mac nodes, absent on Linux/Pi. The daemon
-does not error on missing tools — it simply does not offer them
-to the model.
-
-The tool definition file is the capability boundary. Tools not
-in the file do not exist for the model. This is subtractive
-security: the daemon can do what the file says, nothing else.
+  Tool execution: HOSUNI_ARG set to the model's input,
+  template run via bash -c, output truncated to 65536 bytes,
+  timeout via perl alarm (portable across BSD/GNU).
 
 ## Conversation state
 
-Per-channel, held in memory during the conversation. Written to
-disk as subtract.sh-compatible TSV:
+  Per-channel, held in memory during the conversation. Written
+  to disk:
 
-  ~/.subtract/log/hosuni-{channel_id}.log
+    ~/.subtract/log/hosuni-{channel_id}.log
 
-  Format: timestamp&lt;TAB&gt;Q|A&lt;TAB&gt;content
+  Format: timestamp&lt;TAB&gt;Q|A&lt;TAB&gt;content (truncated to 500 chars)
 
-Conversation history is sent to the model as a messages array.
-Truncated to last 20 turns to stay within context limits.
+  Conversation history sent to the model as a messages array.
+  Truncated to last 20 turns.
 
-## Inference routing
+## Streaming
 
-  1. Read inference endpoint from ~/.subtract/inference_host
-     and ~/.subtract/inference_port
-  2. POST to http://{host}:{port}/v1/chat/completions
-     (OpenAI-compatible, through squared or direct)
-  3. If local returns empty or errors: fall back to
-     claude -p -c (cloud, continues conversation)
+  If the request includes "stream": true, hosuni bypasses the
+  tool loop and streams SSE directly through parsimony pipes
+  or curl. Full content captured to a temp file for logging.
+  Lookdown hits in streaming mode emit SSE-formatted responses.
 
-The routing follows subtract.sh's existing model. The daemon
-does not choose models. It talks to whatever is behind the port.
+## Configuration
 
-## Session logging
+  ~/.subtract/SOUL.txt                    system message (governance)
+  ~/.subtract/inference_host              primary inference host
+  ~/.subtract/inference_port              primary inference port
+  ~/.subtract/research_host               research model host
+  ~/.subtract/research_port               research model port
+  ~/.hosuni/tools.tsv                     tool definitions
+  ~/.subtract/lookdown.$(hostname).tsv    node-specific lookdown
+  ~/.subtract/lookdown.universal.tsv      universal lookdown
 
-Every interaction logged in two places:
+  All plain text. No database. No config format beyond TSV
+  and single-value files.
 
-  1. Session TSV (per-channel, subtract.sh format)
-  2. Daemon log (~/human/sessions/hosuni-discord.log format,
-     includes inference source: local|cloud)
+## What the daemon does not do
+
+  - Does not choose which model to load (operator's job)
+  - Does not manage model files (operator's job)
+  - Does not listen on a port (the spawner's job)
+  - Does not handle shell integration (subtract.sh's job)
+  - Does not sign artifacts (ssh-keygen's job)
+  - Does not manage users (the kernel's job)
+  - Does not fall back to cloud (commented out 2026-05;
+    claude -p is metered after 2026-06-15)
 
 ## Build and deploy
 
   Deploy:   scp hosuni.sh {node}:~/.subtract/bin/hosuni.sh
-  Run:      ~/.subtract/bin/hosuni.sh
-  Service:  launchd plist (Mac) or systemd unit (Linux)
+  Run:      echo '{"input":"...","channel":"test"}' | hosuni.sh
+  Service:  spawned per-request by Discord bot or nc listener
 
-Runtime dependencies: bash, jq, curl, nc. All ship with the OS.
-
-## Configuration
-
-  ~/.keymaster/jean-discord-token.txt     Discord bot token
-  ~/.hosuni-discord-whitelist             allowed Discord user IDs
-  ~/.hosuni/tools.tsv                     tool definitions
-  ~/.subtract/inference_host              inference endpoint host
-  ~/.subtract/inference_port              inference endpoint port
-  ~/.subtract/lookdown.tsv                universal lookdown
-  ~/.subtract/lookdown.personal.tsv       personal lookdown
-
-All plain text files. No database. No config format beyond TSV
-and single-value files.
-
-## What the daemon does not do
-
-  - Does not choose which model to load (that is llama-server's job)
-  - Does not manage model files (that is the operator's job)
-  - Does not proxy HTTP (that is squared's job)
-  - Does not handle shell integration (that is subtract.sh's job)
-  - Does not sign artifacts (that is ssh-keygen's job)
-  - Does not manage users (that is the kernel's job)
+  Runtime dependencies: bash 5+, jq, curl. All ship with the
+  OS (except bash 5+ on stock macOS — requires homebrew bash).
 
 ## Testing
 
-The variance-lab harness runs through hosuni. The five routing
-table prompts (code-refactor, identity-planning, jean-heartbeat,
-research-tooling-landscape, security-audit) dispatched through
-the daemon with tools enabled. This is the first test of local
-models with hands.
+  Board-level eval (eval-system-e2e) runs the same governance
+  probes as the isolation eval (eval-kernel-v7) but end-to-end
+  through hosuni with lookdown, routing, and tools live. Every
+  probe records {response, source, latency} — the path tells
+  you whether lookdown intercepted, the primary chip answered,
+  or research routed.
 
-Finding 4 from the routing table: "single-turn harness is not
-valid for reasoning tier grading." The daemon IS the multi-turn
-harness that makes the grading real.
+  First board-level result (2026-05-25, N=3):
+    Governance reflexes: 72%
+    Temporal grounding:  8%  (research port empty, no grounding)
+    Path: local 45, lookdown 6, research 0
 
-## Verify
+  The zero in research is the measured failure — not one
+  temporal probe could route to grounding.
 
-  https://subtract.ing/llms.txt          manifest
-  https://subtract.ing/hosuni.txt        this document
-
-jnous.com                        2026-05-23                      JNOUS(7)
+jnous.com                        2026-05-25                      JNOUS(7)
 </pre>
 </body>
 </html>

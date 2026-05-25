@@ -29,7 +29,8 @@ keywords: lineage bash ksh ssh sshsig llama.cpp coprocesses pipes grep subtract 
 
 # lineage.txt
 
-The people whose code subtract depends on.
+The people whose code subtract depends on. Remove any of
+them and the system does not function.
 
 
 ## Works Cited
@@ -39,6 +40,13 @@ Fox, Brian J. 1989a. "Bash is in beta release!" Usenet post to
     8906080235.AA01983@wheat-chex.ai.mit.edu.
     https://groups.google.com/group/gnu.announce/msg/a509f48ffb298c35
 
+    Fox wrote the first bash. He also wrote GNU Readline and
+    the History Library — every interactive shell session on
+    every node in the formation uses his input handling. The
+    2017 NYT op-ed with Woolsey is here because what subtract
+    inherits from Fox is not only software but disposition:
+    source code controlling infrastructure must be inspectable.
+
 Fox, Brian J. 1989b–. GNU Readline Library. Boston: Free Software
     Foundation.
     https://tiswww.case.edu/php/chet/readline/rltop.html
@@ -47,24 +55,99 @@ Fox, Brian J. 1989c–. GNU History Library. Boston: Free Software
     Foundation.
     https://tiswww.case.edu/php/chet/readline/history.html
 
+Ramey, Chester W. 1996–. Bash maintenance and development (versions
+    2.0 through 5.2+). Case Western Reserve University.
+    https://tiswww.case.edu/php/chet/bash/bashtop.html
+
+    Modern bash is Ramey. Fox wrote 1.x; everything since is
+    Ramey's. hosuni.sh depends on bash 5+ features that are
+    his work: the mkfifo + kept-open-fd sleep trick (read -u
+    against a file descriptor from an unlinked FIFO), trap
+    RETURN semantics for lock cleanup, modern read -t behavior.
+    The daemon's core loop is written in Ramey's bash, not
+    Fox's.
+
 Korn, David G. 1994. "ksh — An Extensible High Level Language."
     Proceedings of the USENIX 1994 Very High Level Languages Symposium
     (documents ksh88, released 1988).
     https://www.in-ulm.de/~mascheck/various/whatshell/ksh94.pdf
 
+    Coprocesses (coproc) originate in ksh88. parsimony.c runs
+    as a coprocessor to hosuni.sh — the architectural pattern
+    of a shell daemon driving a C filter through bidirectional
+    pipes is Korn's invention.
+
+Thompson, Kenneth L. 1973. Pipes, implemented in Unix V3, February.
+    From McIlroy's 1964 proposal.
+
+    Pipes are the architectural primitive that lets parsimony
+    be a unix filter and lets hosuni route through coprocessors.
+    Every inference call in the system flows through Thompson's
+    primitive.
+
+Thompson, Kenneth L. 1984. "Reflections on Trusting Trust."
+    Communications of the ACM 27 (8): 761–63. Turing Award Lecture.
+    https://dl.acm.org/doi/10.1145/358198.358210
+
+    "You can't trust code that you did not totally create
+    yourself." The foundational statement of why signed audit
+    chains matter. The entire signing-chain architecture in
+    subtract — every reflex.5 enforcement, every ssh-keygen -Y
+    verify — is a direct response to this problem. Thompson
+    named what subtract's signing chain is the answer to.
+
 McIlroy, M. Douglas. 1964. Internal Bell Labs memo (October 11)
     proposing stream-processing programs connected by pipes.
-    Implemented by Ken Thompson in Unix V3 (February 1973).
 
-Ritchie, Dennis M. 1984. "The Evolution of the Unix Time-sharing
-    System." AT&amp;T Bell Laboratories Technical Journal 63 (8): 1577–93.
-    https://www.bell-labs.com/usr/dmr/www/hist.html
+    "We should have some ways of coupling programs like garden
+    hose." The memo that became pipes. McIlroy proposed;
+    Thompson implemented. subtract's architecture — hosuni
+    piping through parsimony piping through llama — is garden
+    hose.
+
+Ylönen, Tatu. 1995. SSH (Secure Shell). University of Helsinki.
+    https://www.ssh.com/academy/ssh
+
+    SSH is how the formation exists. Every node dispatch, every
+    scp of hosuni.sh to a new machine, every claude -p routed
+    through a remote node. Without Ylönen's protocol there is
+    no formation — only isolated machines.
+
+Miller, Damien. 2019–. ssh-keygen -Y sign/verify, introduced in
+    OpenSSH 8.0. OpenBSD project.
+    https://man.openbsd.org/ssh-keygen#Y
+
+    Miller added sign and verify operations to ssh-keygen,
+    giving SSH keys a purpose beyond authentication: signing
+    arbitrary data with a key you already have. Without this
+    addition, subtract's signing chain has no first-class
+    primitive to use. The exact command on the subtract.ing
+    manifest header —
+      ssh-keygen -Y verify -f allowed_signers -n subtract.ing
+    — is Miller's work.
+
+Gerganov, Georgi. 2023–. llama.cpp and GGUF format.
+    https://github.com/ggerganov/llama.cpp
+
+    parsimony.c links -lllama. The GGUF quantization format
+    is what makes local inference executable on hardware a
+    family can own. The 1-bit finding (finding 8) runs on an
+    8GB M2 Mini because Gerganov's work made it possible to
+    fit a model in memory that small. Without llama.cpp there
+    is no local inference and subtract requires a cloud
+    provider — which is the thing subtract exists to not need.
 
 Woolsey, R. James, and Brian J. Fox. 2017. "To Protect Voting, Use
     Open-Source Software." *New York Times,* August 3.
     https://www.nytimes.com/2017/08/03/opinion/open-source-software-hacker-voting.html
 
-jnous.com                        2026-05-23                      JNOUS(7)
+    The only non-code entry. Included because it names the
+    disposition subtract inherits from Fox: that software
+    controlling consequential systems must be auditable. A
+    former CIA director and the author of bash, arguing the
+    same position subtract takes on inference.
+
+jnous.com                        2026-05-25                      JNOUS(7)
 </pre>
 </body>
 </html>
